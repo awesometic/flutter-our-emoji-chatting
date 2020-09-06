@@ -1,4 +1,4 @@
-# our_emo_chats
+# our_emoji_chatting
 
 A new Flutter project.
 
