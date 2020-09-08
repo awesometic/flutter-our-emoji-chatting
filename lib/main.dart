@@ -10,20 +10,6 @@
 // bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
 
 import 'package:flutter/material.dart';
-
-import 'src/ui/bottom_navigation.dart';
+import 'package:our_emoji_chatting/src/app.dart';
 
 void main() => runApp(MyApp());
-
-/// This Widget is the main application widget.
-class MyApp extends StatelessWidget {
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
-  }
-}
