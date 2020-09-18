@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:our_emoji_chatting/src/chatting_screen/view/chatting_view.dart';
 
 import '../cubit/bottom_navigation_cubit.dart';
 
@@ -9,9 +8,7 @@ class BottomNavigation extends StatelessWidget {
   BottomNavigation({Key key}) : super(key: key);
 
   final appScreens = <Widget>[
-    Container(
-      color: Colors.blueGrey,
-    ),
+    ChattingScreen(),
     Container(
       color: Colors.red,
     ),
