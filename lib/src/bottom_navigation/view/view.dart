@@ -1,70 +1,54 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
+import '../cubit/bottom_navigation_cubit.dart';
 
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
+class BottomNavigation extends StatelessWidget {
+  BottomNavigation({Key key}) : super(key: key);
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _currentIndex = 0;
-  PageController _pageController;
+  final appScreens = <Widget>[
+    Container(
+      color: Colors.blueGrey,
+    ),
+    Container(
+      color: Colors.red,
+    ),
+    Container(
+      color: Colors.green,
+    ),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  final bottomNavigationItems = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+        title: Text('Chatting'), icon: Icon(Icons.chat_bubble)),
+    BottomNavigationBarItem(title: Text('Me'), icon: Icon(Icons.person)),
+    BottomNavigationBarItem(
+        title: Text('Settings'), icon: Icon(Icons.settings)),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    BottomNavigationCubit bottomNavigationCubit = BottomNavigationCubit(0);
+
     return Scaffold(
-      appBar: AppBar(title: Text("Nav Bar")),
+      appBar: AppBar(title: Text("Our Emoji Chatting")),
       body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
-          children: <Widget>[
-            Container(
-              color: Colors.blueGrey,
-            ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-          ],
+        child: BlocConsumer<BottomNavigationCubit, int>(
+          cubit: bottomNavigationCubit,
+          builder: (_, __) => appScreens[bottomNavigationCubit.state],
+          listener: (_, __) {},
         ),
       ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(title: Text('Item One'), icon: Icon(Icons.home)),
-          BottomNavyBarItem(title: Text('Item One'), icon: Icon(Icons.apps)),
-          BottomNavyBarItem(
-              title: Text('Item One'), icon: Icon(Icons.chat_bubble)),
-          BottomNavyBarItem(
-              title: Text('Item One'), icon: Icon(Icons.settings)),
-        ],
-      ),
+      bottomNavigationBar: BlocConsumer<BottomNavigationCubit, int>(
+          cubit: bottomNavigationCubit,
+          builder: (_, __) => BottomNavigationBar(
+                currentIndex: bottomNavigationCubit.state,
+                onTap: (index) => bottomNavigationCubit.setState(index),
+                items: bottomNavigationItems,
+              ),
+          listener: (_, __) {}),
     );
   }
 }
