@@ -1,5 +1,6 @@
 enum ChattingListState {
   Created,
-  MessageUpdated,
+  MessageUpdatedOdd,
+  MessageUpdatedEven,
   ShowToast,
 }

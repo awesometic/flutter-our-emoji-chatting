@@ -11,7 +11,7 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   void init() {
     // Temporary work around,
     // This will access to a remote server to get the current message lists
-    emit(ChattingListState.MessageUpdated);
+    emit(ChattingListState.MessageUpdatedOdd);
   }
 
   void newMessage(String message) {
@@ -19,6 +19,9 @@ class ChattingListCubit extends Cubit<ChattingListState> {
 
     developer.log(chattingMessages.map((message) => message.text).join(','));
 
-    emit(ChattingListState.MessageUpdated);
+    if (chattingMessages.length % 2 == 0)
+      emit(ChattingListState.MessageUpdatedOdd);
+    else
+      emit(ChattingListState.MessageUpdatedEven);
   }
 }
