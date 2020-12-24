@@ -14,9 +14,6 @@ class ChattingScreen extends StatelessWidget {
         BlocProvider<ChattingInputCubit>(
           create: (_) => ChattingInputCubit(),
         ),
-        BlocProvider<ChattingListCubit>(
-          create: (_) => ChattingListCubit(ChattingListState.Created),
-        ),
       ],
       child: Column(children: [
         Flexible(

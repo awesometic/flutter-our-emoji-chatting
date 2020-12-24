@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Current References
+
+- https://medium.com/flutterando/cubit-a-simple-solution-for-app-state-management-in-flutter-66ab5279ef73, https://github.com/irvine5k/cubit_movies_app
+- https://github.com/adityadroid/Messio
+- https://github.com/Fintasys/Flutter-Bloc-Firebase-Chat

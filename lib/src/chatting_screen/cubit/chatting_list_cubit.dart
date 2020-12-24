@@ -1,27 +1,27 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:our_emoji_chatting/src/chatting_screen/chatting_screen.dart';
+
+import 'package:our_emoji_chatting/src/chatting_screen/cubit/chatting_list_state.dart';
 
 import 'dart:developer' as developer;
 
 class ChattingListCubit extends Cubit<ChattingListState> {
-  ChattingListCubit(ChattingListState state) : super(state);
-
-  List<ChattingMessage> chattingMessages = [];
-
-  void init() {
-    // Temporary work around,
-    // This will access to a remote server to get the current message lists
-    emit(ChattingListState.MessageUpdatedOdd);
+  ChattingListCubit() : super(ChattingListInit()) {
+    // Do some jobs right after initializing
+    _createChattingList();
   }
 
-  void newMessage(String message) {
-    chattingMessages.add(ChattingMessage(text: message));
+  void _createChattingList() {
+    // Do some jobs here before showing to the user
+    emit(ChattingListCreated());
+  }
 
-    developer.log(chattingMessages.map((message) => message.text).join(','));
+  void receiveChatFromRemote() {
+    // Do some jobs here right after the receving chat message then show the user the result
+    emit(ChattingListReceiveChat());
+  }
 
-    if (chattingMessages.length % 2 == 0)
-      emit(ChattingListState.MessageUpdatedOdd);
-    else
-      emit(ChattingListState.MessageUpdatedEven);
+  void sendChatToTheRemote() {
+    // Do some jobs here right before sending chat message then show the user the result
+    emit(ChattingListSendChat());
   }
 }

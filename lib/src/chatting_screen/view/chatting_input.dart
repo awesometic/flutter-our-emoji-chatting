@@ -19,9 +19,6 @@ class ChattingInput extends StatelessWidget {
           BlocListener<ChattingInputCubit, ChattingInputState>(
             listener: (context, state) => {},
           ),
-          BlocListener<ChattingListCubit, ChattingListState>(
-            listener: (context, state) => {},
-          )
         ],
         child: Row(
           children: [
@@ -56,14 +53,12 @@ class ChattingInput extends StatelessWidget {
   void _aboutToTextSubmitted(
       BuildContext context, TextEditingController controller) {
     var chatInputCubit = context.bloc<ChattingInputCubit>();
-    var chatListCubit = context.bloc<ChattingListCubit>();
-
     chatInputCubit.onTyping(_textController.text);
 
     if (chatInputCubit.state.userText.invalid) {
       developer.log('Invalid text');
     } else {
-      chatListCubit.newMessage(chatInputCubit.state.userText.value);
+      (chatInputCubit.state.userText.value);
     }
 
     controller.clear();
