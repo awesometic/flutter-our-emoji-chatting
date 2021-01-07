@@ -14,38 +14,30 @@ class ChattingInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.0),
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<ChattingInputCubit, ChattingInputState>(
-            listener: (context, state) => {},
+      child: Row(
+        children: [
+          Flexible(
+            child: TextField(
+              controller: _textController,
+              onSubmitted: (_) => _aboutToTextSubmitted(
+                context,
+                _textController,
+              ),
+              decoration: InputDecoration.collapsed(hintText: 'Send a message'),
+              focusNode: _focusNode,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 4.0,
+            ),
+            child: IconButton(
+                icon: const Icon(Icons.send),
+                color: Theme.of(context).accentColor,
+                onPressed: () =>
+                    _aboutToTextSubmitted(context, _textController)),
           ),
         ],
-        child: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: _textController,
-                onSubmitted: (_) => _aboutToTextSubmitted(
-                  context,
-                  _textController,
-                ),
-                decoration:
-                    InputDecoration.collapsed(hintText: 'Send a message'),
-                focusNode: _focusNode,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 4.0,
-              ),
-              child: IconButton(
-                  icon: const Icon(Icons.send),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () =>
-                      _aboutToTextSubmitted(context, _textController)),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -53,12 +45,14 @@ class ChattingInput extends StatelessWidget {
   void _aboutToTextSubmitted(
       BuildContext context, TextEditingController controller) {
     var chatInputCubit = context.bloc<ChattingInputCubit>();
+    var chatListCubit = context.bloc<ChattingListCubit>();
+
     chatInputCubit.onTyping(_textController.text);
 
     if (chatInputCubit.state.userText.invalid) {
       developer.log('Invalid text');
     } else {
-      (chatInputCubit.state.userText.value);
+      chatListCubit.sendChatToTheRemote(chatInputCubit.state.userText.value);
     }
 
     controller.clear();

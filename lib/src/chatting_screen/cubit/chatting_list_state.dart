@@ -21,3 +21,13 @@ class ChattingListSendChat extends ChattingListState {
   @override
   List<Object> get props => [];
 }
+
+class ChattingListUpdateOdd extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChattingListUpdateEven extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}

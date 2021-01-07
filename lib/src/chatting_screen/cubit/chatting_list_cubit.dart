@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:our_emoji_chatting/src/chatting_screen/cubit/chatting_list_state.dart';
+import 'package:our_emoji_chatting/src/chatting_screen/chatting_screen.dart';
 
 import 'dart:developer' as developer;
 
@@ -9,6 +8,8 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     // Do some jobs right after initializing
     _createChattingList();
   }
+
+  List<ChattingMessage> chattingMessages = List<ChattingMessage>();
 
   void _createChattingList() {
     // Do some jobs here before showing to the user
@@ -20,8 +21,13 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     emit(ChattingListReceiveChat());
   }
 
-  void sendChatToTheRemote() {
+  void sendChatToTheRemote(String msg) {
     // Do some jobs here right before sending chat message then show the user the result
-    emit(ChattingListSendChat());
+    chattingMessages.insert(0, ChattingMessage(text: msg));
+
+    if (chattingMessages.length % 2 == 0)
+      emit(ChattingListUpdateOdd());
+    else
+      emit(ChattingListUpdateEven());
   }
 }
