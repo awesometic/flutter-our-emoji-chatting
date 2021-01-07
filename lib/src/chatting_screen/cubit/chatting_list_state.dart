@@ -12,12 +12,7 @@ class ChattingListCreated extends ChattingListState {
   List<Object> get props => [];
 }
 
-class ChattingListReceiveChat extends ChattingListState {
-  @override
-  List<Object> get props => [];
-}
-
-class ChattingListSendChat extends ChattingListState {
+class ChattingListReceivingChat extends ChattingListState {
   @override
   List<Object> get props => [];
 }

@@ -16,9 +16,9 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     emit(ChattingListCreated());
   }
 
-  void receiveChatFromRemote() {
-    // Do some jobs here right after the receving chat message then show the user the result
-    emit(ChattingListReceiveChat());
+  void receivingChatFromRemote() {
+    // Do some jobs here before showing the user the opposite writing a message
+    emit(ChattingListReceivingChat());
   }
 
   void sendChatToTheRemote(String msg) {
