@@ -23,7 +23,13 @@ class ChattingListCubit extends Cubit<ChattingListState> {
 
   void sendChatToTheRemote(String msg) {
     // Do some jobs here right before sending chat message then show the user the result
-    chattingMessages.insert(0, ChattingMessage(text: msg));
+    chattingMessages.insert(
+        0,
+        ChattingMessage(
+          by: "Test Sender",
+          text: msg,
+          direction: ChatDirection.send,
+        ));
 
     if (chattingMessages.length % 2 == 0)
       emit(ChattingListUpdateOdd());
