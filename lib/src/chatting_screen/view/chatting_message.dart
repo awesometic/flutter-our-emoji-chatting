@@ -5,8 +5,6 @@ enum ChatDirection { send, receive }
 class ChattingMessage extends StatelessWidget {
   ChattingMessage({this.by, this.text, this.direction});
 
-  final _name = '';
-
   final String by;
   final String text;
   final ChatDirection direction;
@@ -23,13 +21,17 @@ class ChattingMessage extends StatelessWidget {
           children: [
             Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(child: Text(by))),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_name, style: Theme.of(context).textTheme.headline4),
                 Container(
-                  margin: EdgeInsets.only(top: 5.0),
+                    margin: EdgeInsets.only(top: 10),
+                    child:
+                        Text(by, style: Theme.of(context).textTheme.subtitle1)),
+                Container(
+                  margin: EdgeInsets.only(top: 6),
                   child: Text(text),
                 ),
               ],
@@ -45,13 +47,17 @@ class ChattingMessage extends StatelessWidget {
           children: [
             Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(child: Text(by))),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_name, style: Theme.of(context).textTheme.headline4),
                 Container(
-                  margin: EdgeInsets.only(top: 5.0),
+                    margin: EdgeInsets.only(top: 10),
+                    child:
+                        Text(by, style: Theme.of(context).textTheme.subtitle1)),
+                Container(
+                  margin: EdgeInsets.only(top: 6),
                   child: Text(text),
                 ),
               ],
