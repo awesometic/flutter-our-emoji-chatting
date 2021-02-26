@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:our_emoji_chatting/src/chatting_screen/model/user_text.dart';
+import '../model/user_text.dart';
 
 class ChattingInputState extends Equatable {
   const ChattingInputState({

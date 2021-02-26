@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:our_emoji_chatting/src/bottom_navigation/bottom_navigation.dart';
-
 import 'bottom_navigation/bottom_navigation.dart';
 
 class MyApp extends StatelessWidget {

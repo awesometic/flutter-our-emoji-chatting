@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:our_emoji_chatting/src/chatting_screen/view/chatting_view.dart';
-
+import '../../chatting_screen/view/chatting_view.dart';
 import '../cubit/bottom_navigation_cubit.dart';
 
 class BottomNavigation extends StatelessWidget {
@@ -18,16 +17,14 @@ class BottomNavigation extends StatelessWidget {
   ];
 
   final bottomNavigationItems = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-        title: Text('Chatting'), icon: Icon(Icons.chat_bubble)),
-    BottomNavigationBarItem(title: Text('Me'), icon: Icon(Icons.person)),
-    BottomNavigationBarItem(
-        title: Text('Settings'), icon: Icon(Icons.settings)),
+    BottomNavigationBarItem(label: 'Chatting', icon: Icon(Icons.chat_bubble)),
+    BottomNavigationBarItem(label: 'Me', icon: Icon(Icons.person)),
+    BottomNavigationBarItem(label: 'Settings', icon: Icon(Icons.settings)),
   ];
 
   @override
   Widget build(BuildContext context) {
-    BottomNavigationCubit bottomNavigationCubit = BottomNavigationCubit(0);
+    var bottomNavigationCubit = BottomNavigationCubit(0);
 
     return Scaffold(
       appBar: AppBar(title: Text("Our Emoji Chatting")),

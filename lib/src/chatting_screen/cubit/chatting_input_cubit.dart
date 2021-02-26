@@ -1,10 +1,8 @@
+import 'dart:developer' as developer;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-
-import 'package:our_emoji_chatting/src/chatting_screen/cubit/chatting_input_state.dart';
-import 'package:our_emoji_chatting/src/chatting_screen/model/user_text.dart';
-
-import 'dart:developer' as developer;
+import '../model/user_text.dart';
+import 'chatting_input_state.dart';
 
 class ChattingInputCubit extends Cubit<ChattingInputState> {
   ChattingInputCubit() : super(const ChattingInputState());
