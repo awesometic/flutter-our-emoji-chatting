@@ -17,6 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Current References
 
-- https://medium.com/flutterando/cubit-a-simple-solution-for-app-state-management-in-flutter-66ab5279ef73, https://github.com/irvine5k/cubit_movies_app
-- https://github.com/adityadroid/Messio
-- https://github.com/Fintasys/Flutter-Bloc-Firebase-Chat
+- Firebase
+  - https://flutter.dev/docs/development/data-and-backend/firebase
+  - https://github.com/Fintasys/Flutter-Bloc-Firebase-Chat (One of the listed link above)
+- Bloc, Cubit
+  - https://medium.com/flutterando/cubit-a-simple-solution-for-app-state-management-in-flutter-66ab5279ef73, https://github.com/irvine5k/cubit_movies_app
+  - https://github.com/adityadroid/Messio
