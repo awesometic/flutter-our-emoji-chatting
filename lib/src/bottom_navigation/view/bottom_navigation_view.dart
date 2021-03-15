@@ -7,7 +7,7 @@ class BottomNavigation extends StatelessWidget {
   BottomNavigation({Key key}) : super(key: key);
 
   final appScreens = <Widget>[
-    ChattingScreen(),
+    ChattingView(),
     Container(
       color: Colors.red,
     ),
