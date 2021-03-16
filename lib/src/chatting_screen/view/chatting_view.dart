@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../chatting_screen.dart';
 
-class ChattingScreen extends StatelessWidget {
-  ChattingScreen({Key key}) : super(key: key);
+class ChattingView extends StatelessWidget {
+  ChattingView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
