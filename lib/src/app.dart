@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'bottom_navigation/bottom_navigation.dart';
+import 'login_screen/login_screen.dart';
 
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: BottomNavigation(),
+      home: LoginView(),
     );
   }
 }
