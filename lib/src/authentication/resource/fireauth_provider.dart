@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FireAuthProvider {
   final _fireAuth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> signInWithCredential(AuthCredential credential) async {
+  Future<UserCredential> signInWithCredential(AuthCredential credential) async {
     return _fireAuth.signInWithCredential(credential);
   }
 

@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../resource/auth_provider.dart';
+import '../model/local_user.dart';
 
-class RepositoryService {
-  final _fireAuthProvider = FireAuthProvider();
+abstract class RepositoryService {
+  Future<UserCredential> signInWithCredential(AuthCredential credential);
 
-  Future<FirebaseUser> signInWithCredential(AuthCredential credential) =>
-      _fireAuthProvider.signInWithCredential(credential);
+  Future<void> signOut();
 
-  Future<void> signOut() => _fireAuthProvider.signOut();
+  Future<void> registerUser(LocalUser user);
+
+  Future<LocalUser> getUser(String userId);
+
+  Future<LocalUser> updateUser(LocalUser user);
 }
