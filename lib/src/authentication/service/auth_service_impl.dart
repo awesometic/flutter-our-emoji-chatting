@@ -34,6 +34,7 @@ class AuthServiceImpl implements AuthService {
 
   Future<bool> userSignIn() async {
     var userCredential;
+    var firebaseUser;
     var googleUser = await GoogleSignIn().signIn();
 
     if (googleUser != null) {
@@ -44,16 +45,17 @@ class AuthServiceImpl implements AuthService {
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
       userCredential = await _repository.signInWithCredential(credential);
+      firebaseUser = userCredential.user;
     }
 
-    if (userCredential != null) {
-      var user = await _repository.getUser(userCredential.uid);
+    if (firebaseUser != null) {
+      var user = await _repository.getUser(firebaseUser.uid);
 
       if (user == null) {
         user = LocalUser(
-            id: userCredential.uid,
-            name: userCredential.displayName,
-            avatar: userCredential.photoUrl);
+            id: firebaseUser.uid,
+            name: firebaseUser.displayName,
+            avatar: firebaseUser.photoURL);
 
         await _repository.registerUser(user);
       }

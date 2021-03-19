@@ -2,6 +2,16 @@ import 'package:equatable/equatable.dart';
 
 abstract class LoginSocialState extends Equatable {}
 
+class LogOutState extends LoginSocialState {
+  @override
+  List<Object> get props => [];
+}
+
+class LogInState extends LoginSocialState {
+  @override
+  List<Object> get props => [];
+}
+
 class InitialState extends LoginSocialState {
   @override
   List<Object> get props => [];

@@ -1,13 +1,24 @@
-import 'dart:developer' as developer;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../main.dart';
+import '../../authentication/service/auth_service.dart';
 import 'login_social_state.dart';
 
 class LoginSocialCubit extends Cubit<LoginSocialState> {
   LoginSocialCubit() : super(InitialState());
 
-  void onGoogleClicked() {
-    developer.log('Google auth button clicked');
+  final _authService = getIt<AuthService>();
+
+  void onGoogleClicked() async {
     emit(LoadingState());
+
+    var result = await _authService.userSignIn();
+
+    emit(LoadedState());
+    if (result) {
+      emit(LogInState());
+    } else {
+      emit(ErrorState());
+    }
   }
 }
