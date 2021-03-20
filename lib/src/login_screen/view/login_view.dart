@@ -15,6 +15,7 @@ class LogInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loginSocialCubit = LoginSocialCubit();
+    var isLoading = false;
 
     return MultiBlocProvider(
         providers: [
@@ -29,12 +30,17 @@ class LogInView extends StatelessWidget {
               bloc: loginSocialCubit,
               builder: (_, __) => Container(
                   alignment: Alignment.center,
-                  child: GoogleAuthButton(
-                      onPressed: () => loginSocialCubit.onGoogleClicked(),
-                      darkMode: false)),
+                  child: LoadingOverlay(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: GoogleAuthButton(
+                        onPressed: () => loginSocialCubit.onGoogleClicked(),
+                      ),
+                    ),
+                    isLoading: isLoading,
+                  )),
               listener: (context, state) {
                 log("login_view.dart: changing state: $state");
-                var isLoading = false;
 
                 switch (state.runtimeType) {
                   case LoadingState:
@@ -55,16 +61,6 @@ class LogInView extends StatelessWidget {
                     isLoading = false;
                     break;
                 }
-
-                return LoadingOverlay(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: GoogleAuthButton(
-                      onPressed: () => loginSocialCubit.onGoogleClicked(),
-                    ),
-                  ),
-                  isLoading: isLoading,
-                );
               },
             ),
           ),
