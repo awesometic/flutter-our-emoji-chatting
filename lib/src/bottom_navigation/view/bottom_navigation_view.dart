@@ -30,11 +30,13 @@ class BottomNavigation extends StatelessWidget {
       appBar: AppBar(title: Text("Our Emoji Chatting")),
       body: SizedBox.expand(
         child: BlocConsumer<BottomNavigationCubit, int>(
+          bloc: bottomNavigationCubit,
           builder: (_, __) => appScreens[bottomNavigationCubit.state],
           listener: (_, __) {},
         ),
       ),
       bottomNavigationBar: BlocConsumer<BottomNavigationCubit, int>(
+          bloc: bottomNavigationCubit,
           builder: (_, __) => BottomNavigationBar(
                 currentIndex: bottomNavigationCubit.state,
                 onTap: (index) => bottomNavigationCubit.setState(index),

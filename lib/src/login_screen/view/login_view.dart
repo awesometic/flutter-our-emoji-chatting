@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
@@ -24,13 +26,16 @@ class LogInView extends StatelessWidget {
           appBar: AppBar(title: Text("Our Emoji Chatting")),
           body: SizedBox.expand(
             child: BlocConsumer<LoginSocialCubit, LoginSocialState>(
+              bloc: loginSocialCubit,
               builder: (_, __) => Container(
                   alignment: Alignment.center,
                   child: GoogleAuthButton(
                       onPressed: () => loginSocialCubit.onGoogleClicked(),
                       darkMode: false)),
-              listener: (_, state) {
+              listener: (context, state) {
+                log("login_view.dart: changing state: $state");
                 var isLoading = false;
+
                 switch (state.runtimeType) {
                   case LoadingState:
                     isLoading = true;
