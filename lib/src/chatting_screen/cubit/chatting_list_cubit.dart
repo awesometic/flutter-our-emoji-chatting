@@ -1,4 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../main.dart';
+import '../..//authentication/service/auth_service.dart';
 import '../chatting_screen.dart';
 
 class ChattingListCubit extends Cubit<ChattingListState> {
@@ -22,11 +25,14 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   void sendChatToTheRemote(String msg) {
     // Do some jobs here right before sending chat message then show the user
     // the result
+    var user = getIt<AuthService>().getCurrentUser();
+
     chattingMessages.insert(
         0,
         ChattingMessage(
-          by: "Test Sender",
+          by: user.name,
           text: msg,
+          avatar: user.avatar,
           direction: ChatDirection.send,
         ));
 

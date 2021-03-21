@@ -14,6 +14,27 @@ class AuthServiceImpl implements AuthService {
 
   void setCurrentUser(LocalUser user) => _currentUser.sink.add(user);
 
+  LocalUser getCurrentUser() {
+    return _currentUser.value;
+  }
+
+  Future<bool> isUserSignedIn() async {
+    return GoogleSignIn().isSignedIn();
+  }
+
+  Future<LocalUser> getCurrentLocalUser() async {
+    var prefs = await SharedPreferences.getInstance();
+    LocalUser user;
+    var id = prefs.getString('id');
+    var name = prefs.getString('name');
+    var avatar = prefs.getString('avatar');
+    var aboutMe = prefs.getString('aboutMe');
+    if (id != null) {
+      user = LocalUser(id: id, name: name, avatar: avatar, aboutMe: aboutMe);
+    }
+    return user;
+  }
+
   void saveUserLocally(LocalUser user) async {
     final _prefs = await SharedPreferences.getInstance();
 

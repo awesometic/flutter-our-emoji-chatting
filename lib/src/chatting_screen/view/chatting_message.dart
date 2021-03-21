@@ -1,12 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 enum ChatDirection { send, receive }
 
 class ChattingMessage extends StatelessWidget {
-  ChattingMessage({this.by, this.text, this.direction});
+  ChattingMessage({this.by, this.text, this.avatar, this.direction});
 
   final String by;
   final String text;
+  final String avatar;
   final ChatDirection direction;
 
   @override
@@ -20,9 +22,10 @@ class ChattingMessage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                padding: EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(child: Text(by))),
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(child: CachedNetworkImage(imageUrl: avatar)),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
