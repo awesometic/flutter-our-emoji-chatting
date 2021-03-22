@@ -31,9 +31,9 @@ dependencies:
   # Helpers
   equatable: ^2.0.0
   formz: ^0.3.2
-  fluttertoast: ^8.0.1-nullsafety.0
-  shared_preferences: ^2.0.4
-  image_picker: ^0.7.2+1
+  fluttertoast: ^8.0.3
+  shared_preferences: ^2.0.5
+  image_picker: ^0.7.3
   cached_network_image: ^3.0.0-nullsafety
   intl: ^0.17.0
   auth_buttons: ^1.0.0
@@ -51,7 +51,7 @@ dependencies:
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
   firebase_storage: ^8.0.0
-  google_sign_in: ^5.0.0
+  google_sign_in: ^5.0.1
 
 dev_dependencies:
   flutter_test:
