@@ -11,6 +11,7 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   }
 
   List<ChattingMessage> chattingMessages = <ChattingMessage>[];
+  final _user = getIt<AuthService>().getCurrentUser();
 
   void _createChattingList() {
     // Do some jobs here before showing to the user
@@ -25,14 +26,13 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   void sendChatToTheRemote(String msg) {
     // Do some jobs here right before sending chat message then show the user
     // the result
-    var user = getIt<AuthService>().getCurrentUser();
 
     chattingMessages.insert(
         0,
         ChattingMessage(
-          by: user.name,
+          by: _user.name,
           text: msg,
-          avatar: user.avatar,
+          avatar: _user.avatar,
           direction: ChatDirection.send,
         ));
 
