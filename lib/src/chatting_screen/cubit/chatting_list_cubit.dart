@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main.dart';
-import '../..//authentication/service/auth_service.dart';
+import '../../authentication/service/auth_service.dart';
 import '../chatting_screen.dart';
 
 class ChattingListCubit extends Cubit<ChattingListState> {
