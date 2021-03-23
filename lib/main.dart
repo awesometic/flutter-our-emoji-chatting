@@ -11,8 +11,8 @@ import 'src/authentication/service/repository_service_impl.dart';
 final GetIt getIt = GetIt.instance;
 
 void setupLocator() {
-  getIt.registerLazySingleton<AuthService>(() => AuthServiceImpl());
-  getIt.registerLazySingleton<RepositoryService>(() => RepositoryServiceImpl());
+  getIt.registerSingleton<RepositoryService>(RepositoryServiceImpl());
+  getIt.registerSingleton<AuthService>(AuthServiceImpl());
 }
 
 void main() async {
