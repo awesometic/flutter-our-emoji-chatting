@@ -31,7 +31,10 @@ class BottomNavigation extends StatelessWidget {
       body: SizedBox.expand(
         child: BlocConsumer<BottomNavigationCubit, int>(
           bloc: bottomNavigationCubit,
-          builder: (_, __) => appScreens[bottomNavigationCubit.state],
+          builder: (_, __) => IndexedStack(
+            index: bottomNavigationCubit.state,
+            children: appScreens,
+          ),
           listener: (_, __) {},
         ),
       ),
