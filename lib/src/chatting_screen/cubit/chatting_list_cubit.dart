@@ -12,6 +12,7 @@ class ChattingListCubit extends Cubit<ChattingListState> {
 
   List<ChattingMessage> chattingMessages = <ChattingMessage>[];
   final _user = getIt<AuthService>().getCurrentUser();
+  bool msgFlag = false;
 
   void _createChattingList() {
     // Do some jobs here before showing to the user
@@ -36,10 +37,31 @@ class ChattingListCubit extends Cubit<ChattingListState> {
           direction: ChatDirection.send,
         ));
 
-    if (chattingMessages.length % 2 == 0) {
+// TODO: Clean up this when the chatting service using Firebase is implemented
+    chattingMessages.insert(
+        0,
+        ChattingMessage(
+          by: _user.name,
+          text: 'say one more time: $msg',
+          avatar: _user.avatar,
+          direction: ChatDirection.send,
+        ));
+
+    chattingMessages.insert(
+        0,
+        ChattingMessage(
+          by: _user.name,
+          text: 'from oppsite',
+          avatar: _user.avatar,
+          direction: ChatDirection.receive,
+        ));
+
+    // if (chattingMessages.length % 2 == 0) {
+    if (msgFlag) {
       emit(ChattingListUpdateOdd());
     } else {
       emit(ChattingListUpdateEven());
     }
+    msgFlag = !msgFlag;
   }
 }

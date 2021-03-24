@@ -49,9 +49,10 @@ class ChattingMessage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                padding: EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(child: Text(by))),
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(child: CachedNetworkImage(imageUrl: avatar)),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
