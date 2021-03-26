@@ -61,7 +61,7 @@ class LogInView extends StatelessWidget {
                   case LogInState:
                     isLoading = false;
                     navigateToAndRemoveUntil(
-                        context, StringConstant.routeMainBottomNav, null);
+                        context, StringConstant.routeMatchPerson, null);
                     break;
                   case LoadedState:
                     isLoading = false;

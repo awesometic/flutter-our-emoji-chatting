@@ -27,7 +27,13 @@ class MatchingPersonView extends StatelessWidget {
               bloc: matchingPersonSearchCubit,
               builder: (_, __) => Container(
                 alignment: Alignment.center,
-                child: DropdownSearch<String>(),
+                child: Column(children: <Widget>[
+                  DropdownSearch<String>(),
+                  ElevatedButton(
+                      onPressed: () =>
+                          matchingPersonSearchCubit.onContinueButtonClicked(),
+                      child: Text("Continue")),
+                ]),
               ),
               listener: (context, state) {
                 switch (state.runtimeType) {

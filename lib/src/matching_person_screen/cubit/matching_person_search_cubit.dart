@@ -7,4 +7,8 @@ class MatchingPersonSearchCubit extends Cubit<MatchingPersonSearchState> {
   void onTyping() {
     emit(MatchingPersonSearchSearchedState());
   }
+
+  void onContinueButtonClicked() {
+    emit(MatchingPersonSearchSelectedState());
+  }
 }
