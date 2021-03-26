@@ -1,3 +1,5 @@
+import 'package:our_emoji_chatting/src/authentication/constant/auth_type.dart';
+
 import '../model/local_user.dart';
 
 abstract class AuthService {
@@ -11,5 +13,5 @@ abstract class AuthService {
 
   void saveUserLocally(LocalUser user);
 
-  Future<bool> userSignIn();
+  Future<bool> userSignIn(AuthType type);
 }

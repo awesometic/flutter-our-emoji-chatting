@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../main.dart';
+import '../constant/auth_type.dart';
 import '../model/local_user.dart';
 import 'auth_service.dart';
 import 'repository_service.dart';
@@ -53,20 +55,43 @@ class AuthServiceImpl implements AuthService {
     }
   }
 
-  Future<bool> userSignIn() async {
+  Future<bool> userSignIn(AuthType type) async {
     var userCredential;
     var firebaseUser;
-    var googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser != null) {
-      var googleAuth =
-          await googleUser.authentication.catchError((error) => null);
+    switch (type) {
+      case AuthType.google:
+        var googleUser = await GoogleSignIn().signIn();
+        if (googleUser != null) {
+          var googleAuth =
+              await googleUser.authentication.catchError((error) => null);
 
-      final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+          final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-      userCredential = await _repository.signInWithCredential(credential);
-      firebaseUser = userCredential.user;
+          userCredential = await _repository.signInWithCredential(credential);
+          firebaseUser = userCredential.user;
+        }
+        break;
+      case AuthType.apple:
+        // TODO: Edit webAuthenticationOptions parameters after obtaining proper keys
+        final appleCredential = await SignInWithApple.getAppleIDCredential(
+            scopes: [
+              AppleIDAuthorizationScopes.email,
+              AppleIDAuthorizationScopes.fullName,
+            ],
+            webAuthenticationOptions:
+                WebAuthenticationOptions(clientId: null, redirectUri: null));
+
+        if (appleCredential != null) {
+          final credential = OAuthProvider("apple.com").credential(
+              accessToken: appleCredential.authorizationCode,
+              idToken: appleCredential.identityToken);
+
+          userCredential = await _repository.signInWithCredential(credential);
+          firebaseUser = userCredential.user;
+        }
+        break;
     }
 
     if (firebaseUser != null) {

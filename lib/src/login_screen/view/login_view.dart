@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:auth_buttons/res/buttons/apple_auth_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
 import 'package:loading_overlay/loading_overlay.dart';
 
+import '../../authentication/constant/auth_type.dart';
 import '../../utility/nav_util.dart';
 import '../../utility/string_const.dart';
 import '../login_screen.dart';
@@ -32,11 +34,21 @@ class LogInView extends StatelessWidget {
                   alignment: Alignment.center,
                   child: LoadingOverlay(
                     child: Container(
-                      alignment: Alignment.center,
-                      child: GoogleAuthButton(
-                        onPressed: () => loginSocialCubit.onGoogleClicked(),
-                      ),
-                    ),
+                        alignment: Alignment.center,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              GoogleAuthButton(
+                                onPressed: () =>
+                                    loginSocialCubit.onSocialLoginButtonClicked(
+                                        AuthType.google),
+                              ),
+                              AppleAuthButton(
+                                onPressed: () => loginSocialCubit
+                                    .onSocialLoginButtonClicked(AuthType.apple),
+                              ),
+                            ])),
                     isLoading: isLoading,
                   )),
               listener: (context, state) {
