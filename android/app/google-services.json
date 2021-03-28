@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1086124261090-cf75klmvim43btjjnhgr2snh1bgugis8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.awesometic.our_emoji_chatting",
+            "certificate_hash": "455c5a0f562bf34ba4dc14000e0f22ceb0070002"
+          }
+        },
+        {
           "client_id": "1086124261090-o7iujejjmipbeanbuo5mkjbj28ciqo8d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
