@@ -32,8 +32,14 @@ class AuthServiceImpl implements AuthService {
     var name = prefs.getString('name');
     var avatar = prefs.getString('avatar');
     var aboutMe = prefs.getString('aboutMe');
+    var oppositeUserId = prefs.getString('oppositeUserId');
     if (id != null) {
-      user = LocalUser(id: id, name: name, avatar: avatar, aboutMe: aboutMe);
+      user = LocalUser(
+          id: id,
+          name: name,
+          avatar: avatar,
+          aboutMe: aboutMe,
+          oppositeUserId: oppositeUserId);
     }
     return user;
   }
@@ -53,6 +59,10 @@ class AuthServiceImpl implements AuthService {
 
     if (user.aboutMe != null) {
       _prefs.setString('aboutMe', user.aboutMe);
+    }
+
+    if (user.oppositeUserId != null) {
+      _prefs.setString('aboutMe', user.oppositeUserId);
     }
   }
 

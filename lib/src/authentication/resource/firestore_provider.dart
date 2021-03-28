@@ -17,7 +17,8 @@ class FireStoreProvider {
       'id': user.id,
       'name': user.name,
       'avatar': user.avatar,
-      'aboutMe': user.aboutMe
+      'aboutMe': user.aboutMe,
+      'oppositeUserId': user.oppositeUserId,
     });
   }
 
@@ -25,7 +26,8 @@ class FireStoreProvider {
     return _firestore.collection("users").doc(user.id).update({
       'name': user.name,
       'avatar': user.avatar,
-      'aboutMe': user.aboutMe
+      'aboutMe': user.aboutMe,
+      'oppositeUserId': user.oppositeUserId,
     }).then((_) {
       return getUser(user.id);
     });
@@ -43,7 +45,8 @@ class FireStoreProvider {
           id: documents[0]['id'],
           name: documents[0]['name'],
           avatar: documents[0]['avatar'],
-          aboutMe: documents[0]['aboutMe']);
+          aboutMe: documents[0]['aboutMe'],
+          oppositeUserId: documents[0]['oppositeUserId']);
     }
 
     return null;
