@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:auth_buttons/res/buttons/apple_auth_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
+import 'package:auth_buttons/auth_buttons.dart'
+    show GoogleAuthButton, AppleAuthButton, GithubAuthButton;
 import 'package:loading_overlay/loading_overlay.dart';
 
 import '../../authentication/constant/auth_type.dart';
@@ -48,6 +49,11 @@ class LogInView extends StatelessWidget {
                                 onPressed: () => loginSocialCubit
                                     .onSocialLoginButtonClicked(AuthType.apple),
                               ),
+                              GithubAuthButton(
+                                onPressed: () =>
+                                    loginSocialCubit.onSocialLoginButtonClicked(
+                                        AuthType.github),
+                              )
                             ])),
                     isLoading: isLoading,
                   )),

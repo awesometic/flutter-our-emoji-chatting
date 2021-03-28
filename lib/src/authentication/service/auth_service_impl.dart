@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,6 +92,13 @@ class AuthServiceImpl implements AuthService {
           userCredential = await _repository.signInWithCredential(credential);
           firebaseUser = userCredential.user;
         }
+        break;
+      case AuthType.github:
+        firebaseUser = await FirebaseAuthOAuth().openSignInFlow("github.com", [
+          "read:user",
+          "user:email",
+        ]);
+
         break;
     }
 
