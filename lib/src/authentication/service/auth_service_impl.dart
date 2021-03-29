@@ -107,8 +107,8 @@ class AuthServiceImpl implements AuthService {
             nonce: nonce,
             webAuthenticationOptions: WebAuthenticationOptions(
                 clientId: "net.awesometic.ourEmojiChatting.signIn",
-                redirectUri: Uri.https("api.awesometic.net",
-                    "/our-emoji-chatting/apple-sign-in")));
+                redirectUri: Uri.parse(
+                    "https://api-test.awesometic.net/our-emoji-chatting/callbacks/sign_in_with_apple")));
 
         if (appleCredential != null) {
           final credential = OAuthProvider("apple.com").credential(
