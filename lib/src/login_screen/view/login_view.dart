@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:auth_buttons/res/buttons/apple_auth_button.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class LogInView extends StatelessWidget {
   Widget build(BuildContext context) {
     var loginSocialCubit = LoginSocialCubit();
     var isLoading = false;
+    var appleAuthButtonVisible = Platform.isAndroid ? false : true;
 
     return MultiBlocProvider(
         providers: [
@@ -45,9 +47,13 @@ class LogInView extends StatelessWidget {
                                     loginSocialCubit.onSocialLoginButtonClicked(
                                         AuthType.google),
                               ),
-                              AppleAuthButton(
-                                onPressed: () => loginSocialCubit
-                                    .onSocialLoginButtonClicked(AuthType.apple),
+                              Visibility(
+                                child: AppleAuthButton(
+                                  onPressed: () => loginSocialCubit
+                                      .onSocialLoginButtonClicked(
+                                          AuthType.apple),
+                                ),
+                                visible: appleAuthButtonVisible,
                               ),
                               GithubAuthButton(
                                 onPressed: () =>
