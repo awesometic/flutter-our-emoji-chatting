@@ -1,4 +1,4 @@
-import 'package:our_emoji_chatting/src/authentication/constant/auth_type.dart';
+import '../../authentication/constant/auth_type.dart';
 
 import '../model/local_user.dart';
 
