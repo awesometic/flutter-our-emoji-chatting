@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
@@ -25,16 +26,25 @@ class MatchingPersonView extends StatelessWidget {
             child: BlocConsumer<MatchingPersonSearchCubit,
                 MatchingPersonSearchState>(
               bloc: matchingPersonSearchCubit,
-              builder: (_, __) => Container(
-                alignment: Alignment.center,
-                child: Column(children: <Widget>[
-                  DropdownSearch<String>(),
-                  ElevatedButton(
-                      onPressed: () =>
-                          matchingPersonSearchCubit.onContinueButtonClicked(),
-                      child: Text("Continue")),
-                ]),
-              ),
+              builder: (_, state) {
+                if (state.runtimeType == MatchingPersonSearchOppositeExists) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    navigateToAndRemoveUntil(
+                        context, StringConstant.routeMainBottomNav, null);
+                  });
+                }
+
+                return Container(
+                  alignment: Alignment.center,
+                  child: Column(children: <Widget>[
+                    DropdownSearch<String>(),
+                    ElevatedButton(
+                        onPressed: () =>
+                            matchingPersonSearchCubit.onContinueButtonClicked(),
+                        child: Text("Continue")),
+                  ]),
+                );
+              },
               listener: (context, state) {
                 switch (state.runtimeType) {
                   case MatchingPersonSearchSelectedState:

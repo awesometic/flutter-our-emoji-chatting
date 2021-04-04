@@ -7,7 +7,7 @@ class MatchingPersonSearchInitState extends MatchingPersonSearchState {
   List<Object> get props => [];
 }
 
-class MatchingPersonSearchCreatedState extends MatchingPersonSearchState {
+class MatchingPersonSearchOppositeExists extends MatchingPersonSearchState {
   @override
   List<Object> get props => [];
 }
