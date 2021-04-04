@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1086124261090-l3dkov2t1m20ep01fp5a4hvoakv0133q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1086124261090-l3dkov2t1m20ep01fp5a4hvoakv0133q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1086124261090-cf75klmvim43btjjnhgr2snh1bgugis8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCuzdfGsQU7hvXg49h2GEW3vnJtAqoY5UA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1086124261090</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>net.awesometic.ourEmojiChatting</string>
+	<key>PROJECT_ID</key>
+	<string>our-emoji-chatting</string>
+	<key>STORAGE_BUCKET</key>
+	<string>our-emoji-chatting.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1086124261090:ios:b90d47f8f85373b77fa8bb</string>
+</dict>
+</plist>
