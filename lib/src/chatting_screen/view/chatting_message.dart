@@ -1,19 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../authentication/model/local_user.dart';
+
 enum ChatDirection { send, receive }
 
+// TODO: For now, the content must be a text
 class ChattingMessage extends StatelessWidget {
-  ChattingMessage({this.by, this.text, this.avatar, this.direction});
+  ChattingMessage(this.user, this.content, this.direction);
 
-  final String by;
-  final String text;
-  final String avatar;
+  final LocalUser user;
+  final String content;
   final ChatDirection direction;
 
   @override
   Widget build(BuildContext context) {
     Widget results;
+
+    var avatar = user.avatar;
+    var by = user.name;
+    var text = content;
+
     switch (direction) {
       case ChatDirection.send:
         results = Container(

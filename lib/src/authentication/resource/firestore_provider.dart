@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../chatting_screen/model/chat_info.dart';
 import '../model/local_user.dart';
 
+// TODO: In the future, oppositeUserId should be assigned/used in List<String> type
 class FireStoreProvider {
   final _firestore = FirebaseFirestore.instance;
 
@@ -18,7 +21,7 @@ class FireStoreProvider {
       'name': user.name,
       'avatar': user.avatar,
       'aboutMe': user.aboutMe,
-      'oppositeUserId': user.oppositeUserId,
+      'oppositeUserId': user.oppositeUserId[0],
     });
   }
 
@@ -27,7 +30,7 @@ class FireStoreProvider {
       'name': user.name,
       'avatar': user.avatar,
       'aboutMe': user.aboutMe,
-      'oppositeUserId': user.oppositeUserId,
+      'oppositeUserId': user.oppositeUserId[0],
     }).then((_) {
       return getUser(user.id);
     });
@@ -46,9 +49,53 @@ class FireStoreProvider {
           name: documents[0]['name'],
           avatar: documents[0]['avatar'],
           aboutMe: documents[0]['aboutMe'],
-          oppositeUserId: documents[0]['oppositeUserId']);
+          oppositeUserId: [documents[0]['oppositeUserId']]);
     }
 
     return null;
+  }
+
+  Stream<QuerySnapshot> getChatList() {
+    // TODO: Should be implemented to support multiple chatting rooms
+  }
+
+  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) {
+    return _firestore
+        .collection('messages')
+        .doc(chatInfo?.getGroupChatId())
+        .collection(chatInfo?.getGroupChatId())
+        .orderBy('timestamp', descending: true)
+        .limit(20)
+        .snapshots();
+  }
+
+  Future<void> sendChatMsg(ChatInfo chatInfo, String content, int type) async {
+    var chatReference = FirebaseFirestore.instance
+        .collection('messages')
+        .doc(chatInfo?.getGroupChatId())
+        .collection(chatInfo?.getGroupChatId())
+        .doc(DateTime.now().millisecondsSinceEpoch.toString());
+
+    return _firestore.runTransaction((transaction) async {
+      await transaction.set(chatReference, {
+        'idFrom': chatInfo.fromUser,
+        'idTo': chatInfo.toUser,
+        'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+        'content': content,
+        'type': type
+      });
+    });
+  }
+
+  Future<void> setChatLastMsg(ChatInfo chatInfo, String lastContent) async {
+    var chatReference = FirebaseFirestore.instance
+        .collection('messages')
+        .doc(chatInfo?.getGroupChatId());
+
+    return _firestore.runTransaction((transaction) async {
+      await transaction.set(chatReference, {
+        'lastMessage': lastContent,
+      });
+    });
   }
 }

@@ -7,7 +7,22 @@ class ChattingListInit extends ChattingListState {
   List<Object> get props => [];
 }
 
-class ChattingListCreated extends ChattingListState {
+class ChattingListLoading extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChattingListChatInfoSet extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChattingListNoHistory extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChattingListRoomReady extends ChattingListState {
   @override
   List<Object> get props => [];
 }

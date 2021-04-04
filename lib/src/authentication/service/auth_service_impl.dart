@@ -43,7 +43,7 @@ class AuthServiceImpl implements AuthService {
           name: name,
           avatar: avatar,
           aboutMe: aboutMe,
-          oppositeUserId: oppositeUserId);
+          oppositeUserId: [oppositeUserId]);
     }
     return user;
   }
@@ -66,7 +66,7 @@ class AuthServiceImpl implements AuthService {
     }
 
     if (user.oppositeUserId != null) {
-      _prefs.setString('aboutMe', user.oppositeUserId);
+      _prefs.setStringList('oppositeUserId', user.oppositeUserId);
     }
   }
 

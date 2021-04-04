@@ -6,10 +6,10 @@ class LocalUser {
       this.name,
       this.avatar,
       this.aboutMe,
-      this.oppositeUserId = ""});
+      this.oppositeUserId});
   String id;
   String name;
   String avatar;
   String aboutMe;
-  String oppositeUserId;
+  List<String> oppositeUserId;
 }

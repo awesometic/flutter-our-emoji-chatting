@@ -1,67 +1,67 @@
+import 'dart:developer' as developer;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main.dart';
 import '../../authentication/service/auth_service.dart';
+import '../../authentication/service/repository_service.dart';
+import '../../chatting_screen/model/chat_info.dart';
 import '../chatting_screen.dart';
 
 class ChattingListCubit extends Cubit<ChattingListState> {
-  ChattingListCubit() : super(ChattingListInit()) {
-    // Do some jobs right after initializing
-    _createChattingList();
-  }
+  ChattingListCubit() : super(ChattingListInit());
 
   List<ChattingMessage> chattingMessages = <ChattingMessage>[];
+  ChatInfo chatInfo;
+  final _repository = getIt<RepositoryService>();
   final _user = getIt<AuthService>().getCurrentUser();
-  bool msgFlag = false;
 
-  void _createChattingList() {
-    // Do some jobs here before showing to the user
-    emit(ChattingListCreated());
+  void setChatInfo() async {
+    var oppositeUserId = _user.oppositeUserId?.first;
+
+    emit(ChattingListLoading());
+    await _repository.getUser(oppositeUserId).then((value) {
+      chatInfo = ChatInfo(_user, value);
+      emit(ChattingListChatInfoSet());
+    });
+  }
+
+  void getChatHistory() async {
+    // TODO: getChatHistory doesn't work, have to fix this first
+    emit(ChattingListLoading());
+    await _storeChatMessages(_repository.getChatHistory(chatInfo))
+        ? emit(ChattingListRoomReady())
+        : emit(ChattingListNoHistory());
   }
 
   void receivingChatFromRemote() {
-    // Do some jobs here before showing the user the opposite writing a message
     emit(ChattingListReceivingChat());
   }
 
   void sendChatToTheRemote(String msg) {
-    // Do some jobs here right before sending chat message then show the user
-    // the result
+    emit(ChattingListUpdateOdd());
+    emit(ChattingListUpdateEven());
+  }
 
-    chattingMessages.insert(
-        0,
-        ChattingMessage(
-          by: _user.name,
-          text: msg,
-          avatar: _user.avatar,
-          direction: ChatDirection.send,
-        ));
+  Future<bool> _storeChatMessages(Stream<QuerySnapshot> stream) async {
+    var querySnapshot = await stream.single;
 
-// TODO: Clean up this when the chatting service using Firebase is implemented
-    chattingMessages.insert(
-        0,
-        ChattingMessage(
-          by: _user.name,
-          text: 'say one more time: $msg',
-          avatar: _user.avatar,
-          direction: ChatDirection.send,
-        ));
-
-    chattingMessages.insert(
-        0,
-        ChattingMessage(
-          by: _user.name,
-          text: 'from oppsite',
-          avatar: _user.avatar,
-          direction: ChatDirection.receive,
-        ));
-
-    // if (chattingMessages.length % 2 == 0) {
-    if (msgFlag) {
-      emit(ChattingListUpdateOdd());
+    if (querySnapshot.size == 0) {
+      return false;
     } else {
-      emit(ChattingListUpdateEven());
+      for (var snapshot in querySnapshot as Iterable) {
+        var chatDirection = snapshot["idFrom"] == _user.id
+            ? ChatDirection.send
+            : ChatDirection.receive;
+
+        chattingMessages.add(ChattingMessage(
+            chatDirection == ChatDirection.send
+                ? chatInfo.fromUser
+                : chatInfo.toUser,
+            snapshot["content"],
+            chatDirection));
+      }
+      return true;
     }
-    msgFlag = !msgFlag;
   }
 }
