@@ -27,11 +27,25 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   }
 
   void getChatHistory() async {
-    // TODO: getChatHistory doesn't work, have to fix this first
+    var stream = _repository.getChatHistory(chatInfo);
+
     emit(ChattingListLoading());
-    await _storeChatMessages(_repository.getChatHistory(chatInfo))
-        ? emit(ChattingListRoomReady())
-        : emit(ChattingListNoHistory());
+    await stream.map((querySnapshot) => querySnapshot.docs.map((doc) {
+          var chatDirection = doc["idFrom"] == _user.id
+              ? ChatDirection.send
+              : ChatDirection.receive;
+
+          chattingMessages.add(ChattingMessage(
+              chatDirection == ChatDirection.send
+                  ? chatInfo.fromUser
+                  : chatInfo.toUser,
+              doc["content"],
+              chatDirection));
+        }));
+
+    chattingMessages.isEmpty
+        ? emit(ChattingListNoHistory())
+        : emit(ChattingListRoomReady());
   }
 
   void receivingChatFromRemote() {
@@ -41,27 +55,5 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   void sendChatToTheRemote(String msg) {
     emit(ChattingListUpdateOdd());
     emit(ChattingListUpdateEven());
-  }
-
-  Future<bool> _storeChatMessages(Stream<QuerySnapshot> stream) async {
-    var querySnapshot = await stream.single;
-
-    if (querySnapshot.size == 0) {
-      return false;
-    } else {
-      for (var snapshot in querySnapshot as Iterable) {
-        var chatDirection = snapshot["idFrom"] == _user.id
-            ? ChatDirection.send
-            : ChatDirection.receive;
-
-        chattingMessages.add(ChattingMessage(
-            chatDirection == ChatDirection.send
-                ? chatInfo.fromUser
-                : chatInfo.toUser,
-            snapshot["content"],
-            chatDirection));
-      }
-      return true;
-    }
   }
 }
