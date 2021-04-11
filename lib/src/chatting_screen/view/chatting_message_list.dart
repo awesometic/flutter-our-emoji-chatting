@@ -12,8 +12,6 @@ class ChattingMessageList extends StatefulWidget {
 }
 
 class _ChattingMessageListState extends State<ChattingMessageList> {
-  List<ChattingMessage> _messages = <ChattingMessage>[];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,8 +26,10 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
         return ListView.builder(
             padding: EdgeInsets.all(8.0),
             reverse: true,
-            itemBuilder: (_, index) => _messages[index],
-            itemCount: _messages.length);
+            itemBuilder: (_, index) =>
+                context.read<ChattingListCubit>().chattingMessages[index],
+            itemCount:
+                context.read<ChattingListCubit>().chattingMessages.length);
       },
       listener: (context, state) {
         switch (state.runtimeType) {
@@ -49,7 +49,7 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
         }
 
         if (state is ChattingListUpdateOdd || state is ChattingListUpdateEven) {
-          _messages = context.read<ChattingListCubit>().chattingMessages;
+          developer.log("ChattingList will be updated by the updating states");
         }
 
         setState(() {});

@@ -53,7 +53,8 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   }
 
   void sendChatToTheRemote(String msg) {
-    emit(ChattingListUpdateOdd());
-    emit(ChattingListUpdateEven());
+    chattingMessages.length.isEven
+        ? ChattingListUpdateEven()
+        : ChattingListUpdateOdd();
   }
 }
