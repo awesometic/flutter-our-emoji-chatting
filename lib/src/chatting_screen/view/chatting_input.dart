@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../authentication/constant/message_type.dart';
 import '../chatting_screen.dart';
 
 class ChattingInput extends StatelessWidget {
@@ -53,7 +54,8 @@ class ChattingInput extends StatelessWidget {
     if (chatInputCubit.state.userText.invalid) {
       developer.log('Invalid text');
     } else {
-      chatListCubit.sendChatToTheRemote(chatInputCubit.state.userText.value);
+      chatListCubit.sendChatToTheRemote(
+          chatInputCubit.state.userText.value, MessageType.text);
     }
 
     controller.clear();

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:our_emoji_chatting/src/chatting_screen/model/chat_info.dart';
 
+import '../../authentication/constant/message_type.dart';
+import '../../chatting_screen/model/chat_info.dart';
 import '../model/local_user.dart';
 import '../resource/fireauth_provider.dart';
 import '../resource/firestore_provider.dart';
@@ -30,8 +31,24 @@ class RepositoryServiceImpl implements RepositoryService {
   Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) =>
       _fireStoreProvider.getChatHistory(chatInfo);
 
-  Future<void> sendChatMsg(ChatInfo chatInfo, String content, int type) =>
-      _fireStoreProvider.sendChatMsg(chatInfo, content, type);
+  Future<void> sendChatMsg(
+      ChatInfo chatInfo, String content, MessageType type) {
+    var lastContent = content;
+    switch (type) {
+      case MessageType.image:
+        lastContent = "Image was sent";
+        break;
+      case MessageType.sticker:
+        lastContent = "Sticker was sent";
+        break;
+      default:
+        break;
+    }
+
+    return _fireStoreProvider
+        .sendChatMsg(chatInfo, content, type)
+        .then((_) => _fireStoreProvider.setChatLastMsg(chatInfo, lastContent));
+  }
 
   Future<void> setChatLastMsg(ChatInfo chatInfo, String lastContent) =>
       _fireStoreProvider.setChatLastMsg(chatInfo, lastContent);

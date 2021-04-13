@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../authentication/constant/message_type.dart';
 import '../../chatting_screen/model/chat_info.dart';
 import '../model/local_user.dart';
 
@@ -69,7 +70,8 @@ class FireStoreProvider {
         .snapshots();
   }
 
-  Future<void> sendChatMsg(ChatInfo chatInfo, String content, int type) async {
+  Future<void> sendChatMsg(
+      ChatInfo chatInfo, String content, MessageType type) async {
     var chatReference = FirebaseFirestore.instance
         .collection('messages')
         .doc(chatInfo?.getGroupChatId())
@@ -78,11 +80,11 @@ class FireStoreProvider {
 
     return _firestore.runTransaction((transaction) async {
       await transaction.set(chatReference, {
-        'idFrom': chatInfo.fromUser,
-        'idTo': chatInfo.toUser,
+        'idFrom': chatInfo.fromUser.id,
+        'idTo': chatInfo.toUser.id,
         'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
         'content': content,
-        'type': type
+        'type': type.index
       });
     });
   }

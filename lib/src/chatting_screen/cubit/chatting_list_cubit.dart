@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main.dart';
+import '../../authentication/constant/message_type.dart';
 import '../../authentication/service/auth_service.dart';
 import '../../authentication/service/repository_service.dart';
 import '../../chatting_screen/model/chat_info.dart';
@@ -52,7 +53,9 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     emit(ChattingListReceivingChat());
   }
 
-  void sendChatToTheRemote(String msg) {
+  void sendChatToTheRemote(String content, MessageType type) {
+    _repository.sendChatMsg(chatInfo, content, type);
+
     chattingMessages.length.isEven
         ? ChattingListUpdateEven()
         : ChattingListUpdateOdd();
