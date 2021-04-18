@@ -1,9 +1,11 @@
 import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/subjects.dart';
 
 import '../../../main.dart';
 import '../../authentication/constant/message_type.dart';
+import '../../authentication/model/local_user.dart';
 import '../../authentication/service/auth_service.dart';
 import '../../authentication/service/repository_service.dart';
 import '../../chatting_screen/model/chat_info.dart';
@@ -12,52 +14,35 @@ import '../chatting_screen.dart';
 class ChattingListCubit extends Cubit<ChattingListState> {
   ChattingListCubit() : super(ChattingListInit());
 
-  List<ChattingMessage> chattingMessages = <ChattingMessage>[];
-  ChatInfo chatInfo;
+  ChatInfo _chatInfo;
+
+  final _chatHistory = BehaviorSubject<QuerySnapshot>();
   final _repository = getIt<RepositoryService>();
   final _user = getIt<AuthService>().getCurrentUser();
 
-  void setChatInfo() async {
+  Stream<QuerySnapshot> get chatHistory => _chatHistory.stream;
+
+  LocalUser get user => _user;
+
+  ChatInfo get chatInfo => _chatInfo;
+
+  void initChatRoom() async {
     var oppositeUserId = _user.oppositeUserId?.first;
 
     emit(ChattingListLoading());
     await _repository.getUser(oppositeUserId).then((value) {
-      chatInfo = ChatInfo(_user, value);
-      emit(ChattingListChatInfoSet());
+      _chatInfo = ChatInfo(_user, value);
     });
+    _chatHistory.addStream(_repository.getChatHistory(_chatInfo));
+
+    emit(ChattingListInit());
   }
 
-  void getChatHistory() async {
-    var stream = _repository.getChatHistory(chatInfo);
-
-    emit(ChattingListLoading());
-    await stream.map((querySnapshot) => querySnapshot.docs.map((doc) {
-          var chatDirection = doc["idFrom"] == _user.id
-              ? ChatDirection.send
-              : ChatDirection.receive;
-
-          chattingMessages.add(ChattingMessage(
-              chatDirection == ChatDirection.send
-                  ? chatInfo.fromUser
-                  : chatInfo.toUser,
-              doc["content"],
-              chatDirection));
-        }));
-
-    chattingMessages.isEmpty
-        ? emit(ChattingListNoHistory())
-        : emit(ChattingListRoomReady());
-  }
-
-  void receivingChatFromRemote() {
-    emit(ChattingListReceivingChat());
+  void thereIsNoHistory() {
+    emit(ChattingListNoHistory());
   }
 
   void sendChatToTheRemote(String content, MessageType type) {
-    _repository.sendChatMsg(chatInfo, content, type);
-
-    chattingMessages.length.isEven
-        ? ChattingListUpdateEven()
-        : ChattingListUpdateOdd();
+    _repository.sendChatMsg(_chatInfo, content, type);
   }
 }

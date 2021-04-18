@@ -12,48 +12,107 @@ class ChattingMessageList extends StatefulWidget {
 }
 
 class _ChattingMessageListState extends State<ChattingMessageList> {
+  // TODO: Change chattingMessages structures to use snapshot data as it is
+  // This is the best way to work with Firestore...
+  var chattingMessages;
+  ChattingListCubit chattingListCubit;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (chattingListCubit == null) {
+      chattingListCubit = context.read<ChattingListCubit>();
+      chattingListCubit.initChatRoom();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
         child: BlocConsumer<ChattingListCubit, ChattingListState>(
-      builder: (context, state) {
-        var chatInfo = context.read<ChattingListCubit>().chatInfo;
-
-        if (chatInfo == null) {
-          context.read<ChattingListCubit>().setChatInfo();
-        }
-
-        return ListView.builder(
-            padding: EdgeInsets.all(8.0),
-            reverse: true,
-            itemBuilder: (_, index) =>
-                context.read<ChattingListCubit>().chattingMessages[index],
-            itemCount:
-                context.read<ChattingListCubit>().chattingMessages.length);
-      },
-      listener: (context, state) {
+      builder: (_, state) {
         switch (state.runtimeType) {
+          case ChattingListInit:
+            return buildListMessage();
           case ChattingListLoading:
-            developer.log("ChattingList screen in loading...");
-            return;
-          case ChattingListChatInfoSet:
-            developer.log("Chatting ChatInfo object set");
-            context.read<ChattingListCubit>().getChatHistory();
+          default:
+            return buildLoadingScreen();
+        }
+      },
+      listener: (_, state) {
+        switch (state.runtimeType) {
+          case ChattingListInit:
+            developer.log("Chatting room initilized");
             return;
           case ChattingListNoHistory:
             developer.log("Chatting history has nothing");
             break;
-          case ChattingListRoomReady:
-            developer.log("Chatting history loaded in logic");
-            break;
         }
-
-        if (state is ChattingListUpdateOdd || state is ChattingListUpdateEven) {
-          developer.log("ChattingList will be updated by the updating states");
-        }
-
-        setState(() {});
       },
     ));
+  }
+
+  Widget buildListMessage() {
+    var chatInfo = chattingListCubit.chatInfo;
+    var user = chattingListCubit.user;
+
+    return StreamBuilder(
+        stream: chattingListCubit.chatHistory,
+        builder: (_, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+              if (snapshot.hasError) {
+                return buildErrorScreen();
+              } else if (!snapshot.hasData) {
+                chattingListCubit.thereIsNoHistory();
+                return buildNoHistoryScreen();
+              } else {
+                developer.log(snapshot.data.docs.toString());
+                snapshot.data.docs.map((doc) {
+                  var chatDirection = doc["idFrom"] == user.id
+                      ? ChatDirection.send
+                      : ChatDirection.receive;
+
+                  chattingMessages.add(ChattingMessage(
+                      chatDirection == ChatDirection.send
+                          ? chatInfo.fromUser
+                          : chatInfo.toUser,
+                      doc["content"],
+                      chatDirection));
+                });
+                developer.log(chattingMessages.toString());
+                return ListView.builder(
+                    padding: EdgeInsets.all(8.0),
+                    reverse: true,
+                    itemBuilder: (_, index) => chattingMessages[index],
+                    itemCount: chattingMessages.length);
+              }
+              break;
+            case ConnectionState.waiting:
+              return buildLoadingScreen();
+            case ConnectionState.none:
+            default:
+              return buildErrorScreen();
+          }
+        });
+  }
+
+  Widget buildNoHistoryScreen() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget buildLoadingScreen() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget buildErrorScreen() {
+    return Center(
+      child: Text("Server connection error"),
+    );
   }
 }
