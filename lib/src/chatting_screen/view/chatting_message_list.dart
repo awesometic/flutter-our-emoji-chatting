@@ -12,9 +12,6 @@ class ChattingMessageList extends StatefulWidget {
 }
 
 class _ChattingMessageListState extends State<ChattingMessageList> {
-  // TODO: Change chattingMessages structures to use snapshot data as it is
-  // This is the best way to work with Firestore...
-  var chattingMessages;
   ChattingListCubit chattingListCubit;
 
   @override
@@ -68,25 +65,23 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
                 chattingListCubit.thereIsNoHistory();
                 return buildNoHistoryScreen();
               } else {
-                developer.log(snapshot.data.docs.toString());
-                snapshot.data.docs.map((doc) {
-                  var chatDirection = doc["idFrom"] == user.id
-                      ? ChatDirection.send
-                      : ChatDirection.receive;
-
-                  chattingMessages.add(ChattingMessage(
-                      chatDirection == ChatDirection.send
-                          ? chatInfo.fromUser
-                          : chatInfo.toUser,
-                      doc["content"],
-                      chatDirection));
-                });
-                developer.log(chattingMessages.toString());
                 return ListView.builder(
                     padding: EdgeInsets.all(8.0),
                     reverse: true,
-                    itemBuilder: (_, index) => chattingMessages[index],
-                    itemCount: chattingMessages.length);
+                    itemBuilder: (_, index) {
+                      var message = snapshot.data.docs[index];
+                      var chatDirection = message["idFrom"] == user.id
+                          ? ChatDirection.send
+                          : ChatDirection.receive;
+
+                      return ChattingMessage(
+                          chatDirection == ChatDirection.send
+                              ? chatInfo.fromUser
+                              : chatInfo.toUser,
+                          message["content"],
+                          chatDirection);
+                    },
+                    itemCount: snapshot.data.docs.length);
               }
               break;
             case ConnectionState.waiting:
