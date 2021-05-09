@@ -12,6 +12,11 @@ class ChattingListLoading extends ChattingListState {
   List<Object> get props => [];
 }
 
+class ChattingListLoaded extends ChattingListState {
+  @override
+  List<Object> get props => [];
+}
+
 class ChattingListNoHistory extends ChattingListState {
   @override
   List<Object> get props => [];

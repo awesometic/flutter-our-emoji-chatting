@@ -28,8 +28,8 @@ class RepositoryServiceImpl implements RepositoryService {
     return _fireStoreProvider.updateUser(user);
   }
 
-  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) =>
-      _fireStoreProvider.getChatHistory(chatInfo);
+  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo, int messageLength) =>
+      _fireStoreProvider.getChatHistory(chatInfo, messageLength);
 
   Future<void> sendChatMsg(
       ChatInfo chatInfo, String content, MessageType type) {

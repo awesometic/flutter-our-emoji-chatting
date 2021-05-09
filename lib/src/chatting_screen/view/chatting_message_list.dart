@@ -14,6 +14,8 @@ class ChattingMessageList extends StatefulWidget {
 class _ChattingMessageListState extends State<ChattingMessageList> {
   ChattingListCubit chattingListCubit;
 
+  final scrollController = ScrollController();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -31,6 +33,7 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
       builder: (_, state) {
         switch (state.runtimeType) {
           case ChattingListInit:
+          case ChattingListLoaded:
             return buildListMessage();
           case ChattingListLoading:
           default:
@@ -41,6 +44,9 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
         switch (state.runtimeType) {
           case ChattingListInit:
             developer.log("Chatting room initilized");
+            return;
+          case ChattingListLoaded:
+            developer.log("Chatting list loaded");
             return;
           case ChattingListNoHistory:
             developer.log("Chatting history has nothing");
@@ -53,6 +59,15 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
   Widget buildListMessage() {
     var chatInfo = chattingListCubit.chatInfo;
     var user = chattingListCubit.user;
+
+    // If the scroll is at the top, load 20 more chats from the server
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge &&
+          scrollController.position.pixels != 0) {
+        // Set condition as pixels is not 0 because this ListView is reversed
+        chattingListCubit.loadMoreChats();
+      }
+    });
 
     return StreamBuilder(
         stream: chattingListCubit.chatHistory,
@@ -81,7 +96,8 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
                           message["content"],
                           chatDirection);
                     },
-                    itemCount: snapshot.data.docs.length);
+                    itemCount: snapshot.data.docs.length,
+                    controller: scrollController);
               }
               break;
             case ConnectionState.waiting:

@@ -16,7 +16,7 @@ abstract class RepositoryService {
 
   Future<LocalUser> updateUser(LocalUser user);
 
-  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo);
+  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo, int meesageLength);
 
   Future<void> sendChatMsg(ChatInfo chatInfo, String content, MessageType type);
 

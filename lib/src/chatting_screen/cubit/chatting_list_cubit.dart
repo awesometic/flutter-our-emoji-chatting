@@ -20,6 +20,9 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   final _repository = getIt<RepositoryService>();
   final _user = getIt<AuthService>().getCurrentUser();
 
+  int _shownMessageNum = 20;
+  final _numForMoreMsg = 20;
+
   Stream<QuerySnapshot> get chatHistory => _chatHistory.stream;
 
   LocalUser get user => _user;
@@ -33,9 +36,30 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     await _repository.getUser(oppositeUserId).then((value) {
       _chatInfo = ChatInfo(_user, value);
     });
-    _chatHistory.addStream(_repository.getChatHistory(_chatInfo));
+    _chatHistory.addStream(_repository
+        .getChatHistory(_chatInfo, _shownMessageNum)
+        .take(_shownMessageNum));
 
     emit(ChattingListInit());
+  }
+
+  void loadMoreChats() async {
+    var oppositeUserId = _user.oppositeUserId?.first;
+    _shownMessageNum += _numForMoreMsg;
+
+    emit(ChattingListLoading());
+    await _repository.getUser(oppositeUserId).then((value) {
+      _chatInfo = ChatInfo(_user, value);
+    });
+
+    // Close and add a new stream that loads more messages
+    // TODO: How to add a new stream with the new parameters?
+    await _chatHistory.drain();
+    _chatHistory.close();
+    _chatHistory.addStream(_repository
+        .getChatHistory(_chatInfo, _shownMessageNum)
+        .take(_shownMessageNum));
+    emit(ChattingListLoaded());
   }
 
   void thereIsNoHistory() {
