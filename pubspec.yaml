@@ -21,51 +21,40 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  auth_buttons: ^1.0.1+4
+  bloc: ^7.2.1
+  cached_network_image: ^3.1.0
+  cloud_firestore: ^2.5.4
+  crypto: ^3.0.1
+  cupertino_icons: ^1.0.3
+  dropdown_search: ^2.0.0
+  equatable: ^2.0.3
+  firebase_analytics: ^8.3.4
+  firebase_auth: ^3.1.4
+  firebase_auth_oauth: ^1.1.0
+  firebase_core: ^1.8.0
+  firebase_storage: ^10.0.6
   flutter:
     sdk: flutter
-
-  # Logic
-  bloc: ^7.1.0
-  flutter_bloc: ^7.2.0
-  rxdart: ^0.27.2
-  get_it: ^7.2.0
-  equatable: ^2.0.3
-  formz: ^0.4.0
-  shared_preferences: ^2.0.7
-  image_picker: ^0.8.4
-  intl: ^0.17.0
-  cached_network_image: ^3.1.0
-  crypto: ^3.0.1
-
-  # UI
-  cupertino_icons: ^1.0.3
+  flutter_bloc: ^7.3.1
   fluttertoast: ^8.0.8
-  auth_buttons: ^1.0.1+4
+  formz: ^0.4.1
+  get_it: ^7.2.0
+  google_sign_in: ^5.2.0
+  image_picker: ^0.8.4+3
+  intl: ^0.17.0
   loading_overlay: ^0.3.0
-  dropdown_search: ^0.6.3
-
-  # Firebase and its relates
-  firebase_analytics: ^8.3.1
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.1.0
-  cloud_firestore: ^2.5.1
-  firebase_storage: ^10.0.3
-
-  # OAuth
-  google_sign_in: ^5.1.0
-  sign_in_with_apple: ^3.0.0
-  firebase_auth_oauth: ^1.0.3
+  rxdart: ^0.27.2
+  shared_preferences: ^2.0.7
+  sign_in_with_apple: ^3.2.0
 
 dev_dependencies:
+  effective_dart: ^1.3.2
   flutter_test:
     sdk: flutter
 
-  # Dart linter
-  effective_dart: ^1.3.2
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -73,18 +62,14 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
