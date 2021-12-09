@@ -35,7 +35,7 @@ class ChattingInput extends StatelessWidget {
             ),
             child: IconButton(
                 icon: const Icon(Icons.send),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 onPressed: () =>
                     _aboutToTextSubmitted(context, _textController)),
           ),
