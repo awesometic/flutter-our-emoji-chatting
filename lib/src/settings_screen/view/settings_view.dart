@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:our_emoji_chatting/src/utility/string_const.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../settings_screen.dart';
@@ -15,28 +16,22 @@ class SettingsView extends StatelessWidget {
       child: SettingsList(
         sections: [
           SettingsSection(
-            title: 'Environments',
+            title: StringConstant.settingsScreen.catEnvironment,
             tiles: [
-              SettingsTile(
-                title: 'Language',
-                subtitle: 'English', // TODO: Should be changed by the selection => [ '한글', 'English' ]
-                leading: Icon(Icons.language),
-                onPressed: (context) {},
-              ),
               SettingsTile.switchTile(
-                title: 'Lock the application',
+                title: StringConstant.settingsScreen.setLockApp,
                 leading: Icon(Icons.lock),
                 switchValue: true, // TODO: Should be changed by the selection
                 onToggle: (value) {},
               ),
               SettingsTile(
-                title: 'Change password',
+                title: StringConstant.settingsScreen.changePattern,
                 subtitle: '',
                 leading: Icon(Icons.password),
                 onPressed: (context) {},
               ),
               SettingsTile.switchTile(
-                title: 'Use fingerprint',
+                title: StringConstant.settingsScreen.setUsingFingerprint,
                 leading: Icon(Icons.fingerprint),
                 switchValue: true, // TODO: Should be changed by the selection
                 onToggle: (value) {},
@@ -44,10 +39,10 @@ class SettingsView extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: 'Account',
+            title: StringConstant.settingsScreen.catAccount,
             tiles: [
               SettingsTile(
-                title: 'Logout',
+                title: StringConstant.settingsScreen.logout,
                 leading: Icon(Icons.logout),
                 onPressed: (context) {},
               ),
@@ -55,19 +50,6 @@ class SettingsView extends StatelessWidget {
           ),
         ],
       )
-
-      // Container(
-      //   width: MediaQuery.of(context).size.width,
-      //   height: MediaQuery.of(context).size.height * 1,
-      //   decoration: BoxDecoration(
-      //     color: Color(0xFFEEEEEE),
-      //   ),
-      //   child: Padding(
-      //     padding: EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
-      //     child: Column(
-      //     ),
-      //   )
-      // ),
     );
   }
 }

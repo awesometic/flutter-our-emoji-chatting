@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:our_emoji_chatting/src/utility/string_const.dart';
 
 import '../../authentication/constant/constants.dart' show MessageType;
 import '../chatting_screen.dart';
@@ -25,7 +26,7 @@ class ChattingInput extends StatelessWidget {
                 context,
                 _textController,
               ),
-              decoration: InputDecoration.collapsed(hintText: 'Send a message'),
+              decoration: InputDecoration.collapsed(hintText: StringConstant.chatScreen.sendMessageHint),
               focusNode: _focusNode,
             ),
           ),

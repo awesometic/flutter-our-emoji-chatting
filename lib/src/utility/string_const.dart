@@ -1,7 +1,49 @@
+/*
+ * TODO: Internationalization implementation
+ * - https://docs.flutter.dev/development/accessibility-and-localization/internationalization
+ */
 class StringConstant {
-  static const String routeLogIn = "/";
-  static const String routeMatchPerson = "/search";
-  static const String routeMainBottomNav = "/main";
+  // Application
+  static const String appName = "Our Emoji Chatting";
 
-  static const String errorWidgetNotFound = "Widget not found";
+  // Routes
+  static const String routeLogin = '/';
+  static const String routeMain = '/main';
+  static const String routeSearchPerson = '/search';
+
+  static BottomNavigationBarItemNames bottomNavigationBarItemNames = BottomNavigationBarItemNames();
+  static Messages messages = Messages();
+  static ChatScreen chatScreen = ChatScreen();
+  static ProfileScreen profileScreen = ProfileScreen();
+  static SettingsScreen settingsScreen = SettingsScreen();
+}
+
+class BottomNavigationBarItemNames {
+  String get chatting => 'Chatting';
+  String get profile => 'Profile';
+  String get settings => 'settings';
+}
+
+class Messages {
+  String get widgetNotFound => 'Widget not found';
+}
+
+class ChatScreen {
+  String get sendMessageHint => 'Send a message';
+}
+
+class ProfileScreen {
+  String get chatName => 'Chatting name';
+  String get personalIdentifier => 'Personal identifier';
+  String get oppositeIdentifier => 'Opposite identifier';
+}
+
+class SettingsScreen {
+  String get catEnvironment => 'Environment';
+  String get setLockApp => 'Lock the application';
+  String get changePattern => 'Set/Change the pattern';
+  String get setUsingFingerprint => 'Use fingerprint';
+
+  String get catAccount => 'Account';
+  String get logout => 'Logout';
 }

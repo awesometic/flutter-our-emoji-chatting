@@ -28,7 +28,7 @@ class LogInView extends StatelessWidget {
           ),
         ],
         child: Scaffold(
-          appBar: AppBar(title: Text("Our Emoji Chatting")),
+          appBar: AppBar(title: Text(StringConstant.appName)),
           body: SizedBox.expand(
             child: BlocConsumer<LoginSocialCubit, LoginSocialState>(
               bloc: loginSocialCubit,
@@ -72,7 +72,7 @@ class LogInView extends StatelessWidget {
                   case LogInState:
                     isLoading = false;
                     navigateToAndRemoveUntil(
-                        context, StringConstant.routeMatchPerson, null);
+                        context, StringConstant.routeSearchPerson, null);
                     break;
                   case LoadedState:
                     isLoading = false;

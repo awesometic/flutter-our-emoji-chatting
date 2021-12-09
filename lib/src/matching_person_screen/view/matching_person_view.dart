@@ -21,7 +21,7 @@ class MatchingPersonView extends StatelessWidget {
           ),
         ],
         child: Scaffold(
-          appBar: AppBar(title: Text("Our Emoji Chatting")),
+          appBar: AppBar(title: Text(StringConstant.appName)),
           body: SizedBox.expand(
             child: BlocConsumer<MatchingPersonSearchCubit,
                 MatchingPersonSearchState>(
@@ -30,7 +30,7 @@ class MatchingPersonView extends StatelessWidget {
                 if (state.runtimeType == MatchingPersonSearchOppositeExists) {
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     navigateToAndRemoveUntil(
-                        context, StringConstant.routeMainBottomNav, null);
+                        context, StringConstant.routeMain, null);
                   });
                 }
 
@@ -49,7 +49,7 @@ class MatchingPersonView extends StatelessWidget {
                 switch (state.runtimeType) {
                   case MatchingPersonSearchSelectedState:
                     navigateToAndRemoveUntil(
-                        context, StringConstant.routeMainBottomNav, null);
+                        context, StringConstant.routeMain, null);
                     break;
                 }
               },

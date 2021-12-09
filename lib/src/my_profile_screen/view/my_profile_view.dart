@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:our_emoji_chatting/src/utility/string_const.dart';
 
 import '../my_profile_screen.dart';
 
@@ -63,7 +64,7 @@ class MyProfileView extends StatelessWidget {
                               Align(
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Text(
-                                  'Chatting Name',
+                                  StringConstant.profileScreen.chatName,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -112,7 +113,7 @@ class MyProfileView extends StatelessWidget {
                               Align(
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Text(
-                                  'Personal identifier',
+                                  StringConstant.profileScreen.personalIdentifier,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -161,7 +162,7 @@ class MyProfileView extends StatelessWidget {
                               Align(
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Text(
-                                  'Opposite identifier',
+                                  StringConstant.profileScreen.oppositeIdentifier,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,

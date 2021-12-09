@@ -8,16 +8,16 @@ import '../utility/string_const.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case StringConstant.routeLogIn:
+      case StringConstant.routeLogin:
         return MaterialPageRoute(builder: (context) => LogInView());
-      case StringConstant.routeMatchPerson:
+      case StringConstant.routeSearchPerson:
         return MaterialPageRoute(builder: (context) => MatchingPersonView());
-      case StringConstant.routeMainBottomNav:
+      case StringConstant.routeMain:
         return MaterialPageRoute(builder: (context) => BottomNavigation());
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
-                body: Center(child: Text(StringConstant.errorWidgetNotFound))));
+                body: Center(child: Text(StringConstant.messages.widgetNotFound))));
     }
   }
 }
