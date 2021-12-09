@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../chatting_screen/view/chatting_view.dart';
 import '../../my_profile_screen/view/my_profile_view.dart';
+import '../../settings_screen/view/settings_view.dart';
 import '../cubit/bottom_navigation_cubit.dart';
 
 class BottomNavigation extends StatelessWidget {
@@ -10,9 +11,7 @@ class BottomNavigation extends StatelessWidget {
   final appScreens = <Widget>[
     ChattingView(),
     MyProfileView(),
-    Container(
-      color: Colors.green,
-    ),
+    SettingsView(),
   ];
 
   final bottomNavigationItems = <BottomNavigationBarItem>[
