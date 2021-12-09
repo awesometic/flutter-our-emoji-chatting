@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../../authentication/constant/message_type.dart';
+import '../../authentication/constant/constants.dart' show MessageType;
 import '../../chatting_screen/model/chat_info.dart';
 import '../model/local_user.dart';
 

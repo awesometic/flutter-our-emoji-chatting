@@ -7,7 +7,7 @@ import 'package:auth_buttons/auth_buttons.dart'
     show GoogleAuthButton, AppleAuthButton, GithubAuthButton;
 import 'package:loading_overlay/loading_overlay.dart';
 
-import '../../authentication/constant/auth_type.dart';
+import '../../authentication/constant/constants.dart' show AuthType;
 import '../../utility/nav_util.dart';
 import '../../utility/string_const.dart';
 import '../login_screen.dart';

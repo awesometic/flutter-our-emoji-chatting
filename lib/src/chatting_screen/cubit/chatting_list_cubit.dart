@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../main.dart';
-import '../../authentication/constant/message_type.dart';
+import '../../authentication/constant/constants.dart' show MessageType;
 import '../../authentication/model/local_user.dart';
 import '../../authentication/service/auth_service.dart';
 import '../../authentication/service/repository_service.dart';

@@ -10,7 +10,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:crypto/crypto.dart';
 
 import '../../../main.dart';
-import '../constant/auth_type.dart';
+import '../constant/constants.dart' show AuthType;
 import '../model/local_user.dart';
 import 'auth_service.dart';
 import 'repository_service.dart';

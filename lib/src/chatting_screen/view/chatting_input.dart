@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../authentication/constant/message_type.dart';
+import '../../authentication/constant/constants.dart' show MessageType;
 import '../chatting_screen.dart';
 
 class ChattingInput extends StatelessWidget {

@@ -1,4 +1,4 @@
-import '../../authentication/constant/auth_type.dart';
+import '../../authentication/constant/constants.dart' show AuthType;
 
 import '../model/local_user.dart';
 
