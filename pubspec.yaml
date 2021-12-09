@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.17.0
   loading_overlay: ^0.3.0
   rxdart: ^0.27.2
+  settings_ui: ^1.0.0
   shared_preferences: ^2.0.7
   sign_in_with_apple: ^3.2.0
 
