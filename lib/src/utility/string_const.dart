@@ -41,7 +41,8 @@ class ProfileScreen {
 class SettingsScreen {
   String get catEnvironment => 'Environment';
   String get setLockApp => 'Lock the application';
-  String get changePattern => 'Set pattern';
+  String get setUsingPattern => 'Use pattern';
+  String get changePattern => 'Change pattern';
   String get setUsingFingerprint => 'Use fingerprint';
 
   String get catAccount => 'Account';

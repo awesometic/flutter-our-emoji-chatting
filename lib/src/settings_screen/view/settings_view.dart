@@ -58,6 +58,15 @@ class _SettingsViewState extends State<SettingsView> {
                         optionKey: OptKey.lockApplication,
                         optionValue: !_valLockApplication),
                   ),
+                  SettingsTile.switchTile(
+                    title: StringConstant.settingsScreen.setUsingPattern,
+                    leading: Icon(Icons.pattern),
+                    enabled: _valLockApplication,
+                    switchValue: false,
+                    onToggle: (value) {
+                      // TODO: Go to the new page that sets a pattern if not set before
+                    },
+                  ),
                   SettingsTile(
                     title: StringConstant.settingsScreen.changePattern,
                     subtitle: '',
