@@ -16,7 +16,6 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   SettingsCubit _settingsCubit;
-  bool _valLockApplication;
   bool _valUsePattern;
   bool _valUseFingerprint;
 
@@ -27,7 +26,6 @@ class _SettingsViewState extends State<SettingsView> {
     _settingsCubit = SettingsCubit();
 
     // Set the variables to false before loading the actual values
-    _valLockApplication = false;
     _valUsePattern = false;
     _valUseFingerprint = false;
 
@@ -36,9 +34,6 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   void _updateValues() async {
-    _valLockApplication =
-        await _settingsCubit.getOption(optionKey: OptKey.lockApplication) ??
-            false;
     _valUsePattern = await _settingsCubit.getOption(
             optionKey: OptKey.usePatternAsLockMethod) ??
         false;
@@ -58,20 +53,11 @@ class _SettingsViewState extends State<SettingsView> {
           builder: (context, state) => SettingsList(
             sections: [
               SettingsSection(
-                title: StringConstant.settingsScreen.catEnvironment,
+                title: StringConstant.settingsScreen.catLockApplication,
                 tiles: [
-                  SettingsTile.switchTile(
-                    title: StringConstant.settingsScreen.setLockApp,
-                    leading: Icon(Icons.lock),
-                    switchValue: _valLockApplication,
-                    onToggle: (value) => _settingsCubit.saveOption(
-                        optionKey: OptKey.lockApplication,
-                        optionValue: !_valLockApplication),
-                  ),
                   SettingsTile.switchTile(
                     title: StringConstant.settingsScreen.setUsingPattern,
                     leading: Icon(Icons.pattern),
-                    enabled: _valLockApplication,
                     switchValue: _valUsePattern,
                     onToggle: (value) {
                       // TODO: Go to the new page that sets a new pattern
@@ -94,7 +80,6 @@ class _SettingsViewState extends State<SettingsView> {
                   SettingsTile.switchTile(
                     title: StringConstant.settingsScreen.setUsingFingerprint,
                     leading: Icon(Icons.fingerprint),
-                    enabled: _valLockApplication,
                     switchValue: _valUseFingerprint,
                     onToggle: (value) {
                       // TODO: Go to the new page that sets a new fingerprint

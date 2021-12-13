@@ -1,5 +1,4 @@
 enum OptKey {
-  lockApplication,
   usePatternAsLockMethod,
   useFingerprintAsLockMethod,
 }
