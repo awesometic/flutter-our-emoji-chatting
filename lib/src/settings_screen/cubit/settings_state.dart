@@ -11,3 +11,8 @@ class Loaded extends SettingsState {
   @override
   List<Object> get props => [];
 }
+
+class Saved extends SettingsState {
+  @override
+  List<Object> get props => [];
+}
