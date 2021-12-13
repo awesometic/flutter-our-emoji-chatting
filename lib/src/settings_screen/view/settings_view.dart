@@ -24,6 +24,9 @@ class _SettingsViewState extends State<SettingsView> {
 
     _settingsCubit = SettingsCubit();
 
+    // Set the variables to false before loading the actual values
+    _valLockApplication = false;
+
     // Get the actual values asynchronously then redraw the page
     _updateValues();
   }
