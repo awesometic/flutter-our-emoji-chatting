@@ -17,6 +17,8 @@ class SettingsView extends StatefulWidget {
 class _SettingsViewState extends State<SettingsView> {
   SettingsCubit _settingsCubit;
   bool _valLockApplication;
+  bool _valUsePattern;
+  bool _valUseFingerprint;
 
   @override
   void initState() {
@@ -26,6 +28,8 @@ class _SettingsViewState extends State<SettingsView> {
 
     // Set the variables to false before loading the actual values
     _valLockApplication = false;
+    _valUsePattern = false;
+    _valUseFingerprint = false;
 
     // Get the actual values asynchronously then redraw the page
     _updateValues();
@@ -35,6 +39,12 @@ class _SettingsViewState extends State<SettingsView> {
     _valLockApplication =
         await _settingsCubit.getOption(optionKey: OptKey.lockApplication) ??
             false;
+    _valUsePattern = await _settingsCubit.getOption(
+            optionKey: OptKey.usePatternAsLockMethod) ??
+        false;
+    _valUseFingerprint = await _settingsCubit.getOption(
+            optionKey: OptKey.useFingerprintAsLockMethod) ??
+        false;
 
     _settingsCubit.requestInvokeLoadedState();
   }
@@ -62,16 +72,21 @@ class _SettingsViewState extends State<SettingsView> {
                     title: StringConstant.settingsScreen.setUsingPattern,
                     leading: Icon(Icons.pattern),
                     enabled: _valLockApplication,
-                    switchValue: false,
+                    switchValue: _valUsePattern,
                     onToggle: (value) {
-                      // TODO: Go to the new page that sets a pattern if not set before
+                      // TODO: Go to the new page that sets a new pattern
+
+                      // TODO: If a pattern is set then set the value
+                      _settingsCubit.saveOption(
+                          optionKey: OptKey.usePatternAsLockMethod,
+                          optionValue: !_valUsePattern);
                     },
                   ),
                   SettingsTile(
                     title: StringConstant.settingsScreen.changePattern,
                     subtitle: '',
                     leading: Icon(Icons.password),
-                    enabled: _valLockApplication,
+                    enabled: _valUsePattern,
                     onPressed: (context) {
                       // TODO: Go to the new page that sets the pattern
                     },
@@ -80,9 +95,14 @@ class _SettingsViewState extends State<SettingsView> {
                     title: StringConstant.settingsScreen.setUsingFingerprint,
                     leading: Icon(Icons.fingerprint),
                     enabled: _valLockApplication,
-                    switchValue: false,
+                    switchValue: _valUseFingerprint,
                     onToggle: (value) {
-                      // TODO: Go to the new page that sets the fingerprint if not set before
+                      // TODO: Go to the new page that sets a new fingerprint
+
+                      // TODO: If a fingerprint is set then set the value
+                      _settingsCubit.saveOption(
+                          optionKey: OptKey.useFingerprintAsLockMethod,
+                          optionValue: !_valUseFingerprint);
                     },
                   ),
                 ],
