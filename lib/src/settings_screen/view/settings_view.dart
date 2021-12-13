@@ -23,69 +23,85 @@ class _SettingsViewState extends State<SettingsView> {
     super.initState();
 
     _settingsCubit = SettingsCubit();
+
+    // Get the actual values asynchronously then redraw the page
     _updateValues();
   }
 
   void _updateValues() async {
     _valLockApplication =
-        await _settingsCubit.getOption(optionKey: OptKey.lockApplication);
+        await _settingsCubit.getOption(optionKey: OptKey.lockApplication) ??
+            false;
+
+    _settingsCubit.requestInvokeLoadedState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (_) => _settingsCubit,
-        child: SettingsList(
-          sections: [
-            SettingsSection(
-              title: StringConstant.settingsScreen.catEnvironment,
-              tiles: [
-                SettingsTile.switchTile(
-                  title: StringConstant.settingsScreen.setLockApp,
-                  leading: Icon(Icons.lock),
-                  switchValue: _valLockApplication,
-                  onToggle: (value) async {
-                    _settingsCubit.saveOption(
+        child: BlocConsumer<SettingsCubit, SettingsState>(
+          bloc: _settingsCubit,
+          builder: (context, state) => SettingsList(
+            sections: [
+              SettingsSection(
+                title: StringConstant.settingsScreen.catEnvironment,
+                tiles: [
+                  SettingsTile.switchTile(
+                    title: StringConstant.settingsScreen.setLockApp,
+                    leading: Icon(Icons.lock),
+                    switchValue: _valLockApplication,
+                    onToggle: (value) => _settingsCubit.saveOption(
                         optionKey: OptKey.lockApplication,
-                        optionValue: !_valLockApplication);
-                    await _updateValues();
-
-                    setState(() {});
-                  },
-                ),
-                SettingsTile(
-                  title: StringConstant.settingsScreen.changePattern,
-                  subtitle: '',
-                  leading: Icon(Icons.password),
-                  enabled: _valLockApplication,
-                  onPressed: (context) {
-                    // TODO: Go to the new page that sets the pattern
-                  },
-                ),
-                SettingsTile.switchTile(
-                  title: StringConstant.settingsScreen.setUsingFingerprint,
-                  leading: Icon(Icons.fingerprint),
-                  enabled: _valLockApplication,
-                  switchValue: false,
-                  onToggle: (value) {
-                    // TODO: Go to the new page that sets the fingerprint if not set before
-                  },
-                ),
-              ],
-            ),
-            SettingsSection(
-              title: StringConstant.settingsScreen.catAccount,
-              tiles: [
-                SettingsTile(
-                  title: StringConstant.settingsScreen.logout,
-                  leading: Icon(Icons.logout),
-                  onPressed: (context) {
-                    // TODO: Logout using authentication implementations
-                  },
-                ),
-              ],
-            ),
-          ],
+                        optionValue: !_valLockApplication),
+                  ),
+                  SettingsTile(
+                    title: StringConstant.settingsScreen.changePattern,
+                    subtitle: '',
+                    leading: Icon(Icons.password),
+                    enabled: _valLockApplication,
+                    onPressed: (context) {
+                      // TODO: Go to the new page that sets the pattern
+                    },
+                  ),
+                  SettingsTile.switchTile(
+                    title: StringConstant.settingsScreen.setUsingFingerprint,
+                    leading: Icon(Icons.fingerprint),
+                    enabled: _valLockApplication,
+                    switchValue: false,
+                    onToggle: (value) {
+                      // TODO: Go to the new page that sets the fingerprint if not set before
+                    },
+                  ),
+                ],
+              ),
+              SettingsSection(
+                title: StringConstant.settingsScreen.catAccount,
+                tiles: [
+                  SettingsTile(
+                    title: StringConstant.settingsScreen.logout,
+                    leading: Icon(Icons.logout),
+                    onPressed: (context) {
+                      // TODO: Logout using authentication implementations
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          listener: (context, state) async {
+            switch (state.runtimeType) {
+              case Init:
+                break;
+              case Loaded:
+                setState(() {});
+                break;
+              case Saved:
+                // Will load the new values and will invoke Loaded state
+                await _updateValues();
+                break;
+            }
+          },
         ));
   }
 }

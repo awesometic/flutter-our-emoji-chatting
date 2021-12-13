@@ -26,4 +26,7 @@ class SettingsCubit extends Cubit<SettingsState> {
 
     return sharedPref.getBool(optionKey.toShortString());
   }
+
+  // TODO: Is it needed? A better way to late-loading the variables on the settings page?
+  void requestInvokeLoadedState() => emit(Loaded());
 }
