@@ -26,7 +26,8 @@ class BottomNavigation extends StatelessWidget {
     var bottomNavigationCubit = BottomNavigationCubit(0);
 
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(title: Text(StringConstant.appName)),
+      body: SizedBox.expand(
         child: BlocConsumer<BottomNavigationCubit, int>(
           bloc: bottomNavigationCubit,
           builder: (_, __) => IndexedStack(
