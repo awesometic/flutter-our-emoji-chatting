@@ -307,13 +307,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  flutter_settings_ui:
-    dependency: "direct main"
-    description:
-      name: flutter_settings_ui
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   flutter_svg:
     dependency: transitive
     description:
@@ -597,6 +590,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+  settings_ui:
+    dependency: "direct main"
+    description:
+      path: "ext_lib/flutter-settings-ui"
+      relative: true
+    source: path
+    version: "1.0.1"
   shared_preferences:
     dependency: "direct main"
     description:

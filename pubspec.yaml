@@ -40,7 +40,8 @@ dependencies:
   get_it: ^7.2.0
   intl: ^0.17.0
   rxdart: ^0.27.3
-  flutter_settings_ui: ^2.0.1
+  settings_ui:
+    path: ext_lib/flutter-settings-ui
   shared_preferences: ^2.0.11
 
   # UI

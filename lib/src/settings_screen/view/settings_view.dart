@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 import '../../utility/setting_option.dart';
 import '../../utility/string_const.dart';
