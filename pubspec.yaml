@@ -27,32 +27,40 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  auth_buttons: ^2.0.2
+  flutter:
+    sdk: flutter
+
+  # Logic
   bloc: ^8.0.1
   cached_network_image: ^3.2.0
-  cloud_firestore: ^3.1.5
   crypto: ^3.0.1
+  equatable: ^2.0.3
+  flutter_bloc: ^8.0.0
+  formz: ^0.4.1
+  get_it: ^7.2.0
+  intl: ^0.17.0
+  rxdart: ^0.27.3
+  flutter_settings_ui: ^2.0.1
+  shared_preferences: ^2.0.11
+
+  # UI
+  auth_buttons: ^2.0.2
   cupertino_icons: ^1.0.4
   dropdown_search: ^2.0.1
-  equatable: ^2.0.3
+  fluttertoast: ^8.0.8
+  image_picker: ^0.8.4+4
+  loading_overlay: ^0.3.0
+
+  # Firebase
+  cloud_firestore: ^3.1.5
   firebase_analytics: ^9.0.4
   firebase_auth: ^3.3.4
   firebase_auth_oauth: ^1.1.0
   firebase_core: ^1.10.6
   firebase_storage: ^10.2.4
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^8.0.0
-  fluttertoast: ^8.0.8
-  formz: ^0.4.1
-  get_it: ^7.2.0
+
+  # Google, Apple OAuth
   google_sign_in: ^5.2.1
-  image_picker: ^0.8.4+4
-  intl: ^0.17.0
-  loading_overlay: ^0.3.0
-  rxdart: ^0.27.3
-  flutter_settings_ui: ^2.0.1
-  shared_preferences: ^2.0.11
   sign_in_with_apple: ^3.3.0
 
 dev_dependencies:
