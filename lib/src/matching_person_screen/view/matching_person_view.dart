@@ -8,7 +8,7 @@ import '../../utility/string_const.dart';
 import '../matching_person_screen.dart';
 
 class MatchingPersonView extends StatelessWidget {
-  const MatchingPersonView({Key key}) : super(key: key);
+  const MatchingPersonView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,14 @@ class MatchingPersonView extends StatelessWidget {
           ),
         ],
         child: Scaffold(
-          appBar: AppBar(title: Text(StringConstant.appName)),
+          appBar: AppBar(title: const Text(StringConstant.appName)),
           body: SizedBox.expand(
             child: BlocConsumer<MatchingPersonSearchCubit,
                 MatchingPersonSearchState>(
               bloc: matchingPersonSearchCubit,
               builder: (_, state) {
                 if (state.runtimeType == MatchingPersonSearchOppositeExists) {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                  SchedulerBinding.instance?.addPostFrameCallback((_) {
                     navigateToAndRemoveUntil(
                         context, StringConstant.routeMain, null);
                   });
@@ -41,7 +41,7 @@ class MatchingPersonView extends StatelessWidget {
                     ElevatedButton(
                         onPressed: () =>
                             matchingPersonSearchCubit.onContinueButtonClicked(),
-                        child: Text("Continue")),
+                        child: const Text("Continue")),
                   ]),
                 );
               },

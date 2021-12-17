@@ -7,9 +7,9 @@ class LocalUser {
       this.avatar,
       this.aboutMe,
       this.oppositeUserId});
-  String id;
-  String name;
-  String avatar;
-  String aboutMe;
-  List<String> oppositeUserId;
+  String? id;
+  String? name;
+  String? avatar;
+  String? aboutMe;
+  List<String>? oppositeUserId;
 }

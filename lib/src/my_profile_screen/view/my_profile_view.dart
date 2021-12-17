@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:our_emoji_chatting/src/utility/string_const.dart';
 
+import '../../utility/string_const.dart';
 import '../my_profile_screen.dart';
 
 class MyProfileView extends StatelessWidget {
-  const MyProfileView({Key key}) : super(key: key);
+  const MyProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class MyProfileView extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 1,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xFFEEEEEE),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -26,7 +26,7 @@ class MyProfileView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.5,
                     height: MediaQuery.of(context).size.width * 0.5,
                     clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: BlocBuilder<MyProfileCubit, MyProfileState>(
@@ -36,47 +36,48 @@ class MyProfileView extends StatelessWidget {
                       },
                     )),
                 Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
                     child: BlocBuilder<MyProfileCubit, MyProfileState>(
                       builder: (context, state) => Text(
                         context.read<MyProfileCubit>().getUserName(),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
                       ),
                     )),
-                Divider(),
+                const Divider(),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: const AlignmentDirectional(-1, 0),
                                 child: Text(
                                   StringConstant.profileScreen.chatName,
                                   textAlign: TextAlign.start,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
                               ),
                               Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: const AlignmentDirectional(-1, 0),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 5, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
                                     child: BlocBuilder<MyProfileCubit,
                                         MyProfileState>(
                                       builder: (context, state) => Text(
@@ -84,7 +85,7 @@ class MyProfileView extends StatelessWidget {
                                             .read<MyProfileCubit>()
                                             .getUserName(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),
@@ -98,34 +99,36 @@ class MyProfileView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: const AlignmentDirectional(-1, 0),
                                 child: Text(
-                                  StringConstant.profileScreen.personalIdentifier,
+                                  StringConstant
+                                      .profileScreen.personalIdentifier,
                                   textAlign: TextAlign.start,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
                               ),
                               Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: const AlignmentDirectional(-1, 0),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 5, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
                                     child: BlocBuilder<MyProfileCubit,
                                         MyProfileState>(
                                       builder: (context, state) => Text(
@@ -133,7 +136,7 @@ class MyProfileView extends StatelessWidget {
                                             .read<MyProfileCubit>()
                                             .getUserId(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),
@@ -147,34 +150,36 @@ class MyProfileView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: const AlignmentDirectional(-1, 0),
                                 child: Text(
-                                  StringConstant.profileScreen.oppositeIdentifier,
+                                  StringConstant
+                                      .profileScreen.oppositeIdentifier,
                                   textAlign: TextAlign.start,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
                               ),
                               Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: const AlignmentDirectional(-1, 0),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 5, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
                                     child: BlocBuilder<MyProfileCubit,
                                         MyProfileState>(
                                       builder: (context, state) => Text(
@@ -182,7 +187,7 @@ class MyProfileView extends StatelessWidget {
                                             .read<MyProfileCubit>()
                                             .getUserOppositeId(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),

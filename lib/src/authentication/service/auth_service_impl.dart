@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,16 +20,20 @@ class AuthServiceImpl implements AuthService {
   final _repository = getIt<RepositoryService>();
   final _currentUser = BehaviorSubject<LocalUser>();
 
+  @override
   void setCurrentUser(LocalUser user) => _currentUser.sink.add(user);
 
+  @override
   LocalUser getCurrentUser() {
     return _currentUser.value;
   }
 
+  @override
   Future<bool> isUserSignedIn() async {
     return GoogleSignIn().isSignedIn();
   }
 
+  @override
   Future<LocalUser> getCurrentLocalUser() async {
     var prefs = await SharedPreferences.getInstance();
     LocalUser user;
@@ -36,7 +41,8 @@ class AuthServiceImpl implements AuthService {
     var name = prefs.getString('name');
     var avatar = prefs.getString('avatar');
     var aboutMe = prefs.getString('aboutMe');
-    var oppositeUserId = prefs.getString('oppositeUserId');
+    var oppositeUserId = prefs.getString('oppositeUserId') ?? '';
+
     if (id != null) {
       user = LocalUser(
           id: id,
@@ -44,35 +50,33 @@ class AuthServiceImpl implements AuthService {
           avatar: avatar,
           aboutMe: aboutMe,
           oppositeUserId: [oppositeUserId]);
+    } else {
+      // If the user does not exist, return a dummy user
+      user = LocalUser(
+          id: '', name: '', avatar: '', aboutMe: '', oppositeUserId: []);
     }
     return user;
   }
 
+  @override
   void saveUserLocally(LocalUser user) async {
     final _prefs = await SharedPreferences.getInstance();
 
-    _prefs.setString('id', user.id);
+    if (user.id != null) {
+      _prefs.setString('id', user.id!);
+      _prefs.setString('name', user.name ?? '');
+      _prefs.setString('avatar', user.avatar ?? '');
+      _prefs.setString('aboutMe', user.aboutMe ?? '');
 
-    if (user.name != null) {
-      _prefs.setString('name', user.name);
-    }
-
-    if (user.avatar != null) {
-      _prefs.setString('avatar', user.avatar);
-    }
-
-    if (user.aboutMe != null) {
-      _prefs.setString('aboutMe', user.aboutMe);
-    }
-
-    if (user.oppositeUserId != null) {
-      _prefs.setStringList('oppositeUserId', user.oppositeUserId);
+      // TODO: Manage the oppositeUserId separately
+      // _prefs.setString('oppositeUserId', user.oppositeUserId[0] ?? '');
     }
   }
 
+  @override
   Future<bool> userSignIn(AuthType type) async {
-    var userCredential;
-    var firebaseUser;
+    UserCredential userCredential;
+    User? firebaseUser;
 
     switch (type) {
       case AuthType.google:
@@ -89,7 +93,7 @@ class AuthServiceImpl implements AuthService {
         }
         break;
       case AuthType.apple:
-        final charset =
+        const charset =
             '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
         final random = Random.secure();
         final rawNonce =
@@ -132,6 +136,7 @@ class AuthServiceImpl implements AuthService {
     if (firebaseUser != null) {
       var user = await _repository.getUser(firebaseUser.uid);
 
+      // TODO: This condition is always false. Need to implement signing-in process
       if (user == null) {
         user = LocalUser(
             id: firebaseUser.uid,

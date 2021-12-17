@@ -2,13 +2,13 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:our_emoji_chatting/src/utility/string_const.dart';
 
 import '../../authentication/constant/constants.dart' show MessageType;
+import '../../utility/string_const.dart';
 import '../chatting_screen.dart';
 
 class ChattingInput extends StatelessWidget {
-  ChattingInput({Key key}) : super(key: key);
+  ChattingInput({Key? key}) : super(key: key);
 
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
@@ -16,7 +16,7 @@ class ChattingInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
           Flexible(
@@ -26,12 +26,13 @@ class ChattingInput extends StatelessWidget {
                 context,
                 _textController,
               ),
-              decoration: InputDecoration.collapsed(hintText: StringConstant.chatScreen.sendMessageHint),
+              decoration: InputDecoration.collapsed(
+                  hintText: StringConstant.chatScreen.sendMessageHint),
               focusNode: _focusNode,
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               horizontal: 4.0,
             ),
             child: IconButton(

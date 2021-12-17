@@ -12,25 +12,32 @@ class RepositoryServiceImpl implements RepositoryService {
   final _fireAuthProvider = FireAuthProvider();
   final _fireStoreProvider = FireStoreProvider();
 
+  @override
   Future<UserCredential> signInWithCredential(AuthCredential credential) =>
       _fireAuthProvider.signInWithCredential(credential);
 
+  @override
   Future<void> signOut() => _fireAuthProvider.signOut();
 
+  @override
   Future<void> registerUser(LocalUser user) =>
       _fireStoreProvider.registerUser(user);
 
+  @override
   Future<LocalUser> getUser(String userId) {
     return _fireStoreProvider.getUser(userId);
   }
 
+  @override
   Future<LocalUser> updateUser(LocalUser user) {
     return _fireStoreProvider.updateUser(user);
   }
 
+  @override
   Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo, int messageLength) =>
       _fireStoreProvider.getChatHistory(chatInfo, messageLength);
 
+  @override
   Future<void> sendChatMsg(
       ChatInfo chatInfo, String content, MessageType type) {
     var lastContent = content;
@@ -50,6 +57,7 @@ class RepositoryServiceImpl implements RepositoryService {
         .then((_) => _fireStoreProvider.setChatLastMsg(chatInfo, lastContent));
   }
 
+  @override
   Future<void> setChatLastMsg(ChatInfo chatInfo, String lastContent) =>
       _fireStoreProvider.setChatLastMsg(chatInfo, lastContent);
 }

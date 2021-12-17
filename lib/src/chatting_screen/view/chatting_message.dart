@@ -7,7 +7,12 @@ enum ChatDirection { send, receive }
 
 // TODO: For now, the content must be a text
 class ChattingMessage extends StatelessWidget {
-  ChattingMessage(this.user, this.content, this.direction);
+  const ChattingMessage(
+      {Key? key,
+      required this.user,
+      required this.content,
+      required this.direction})
+      : super(key: key);
 
   final LocalUser user;
   final String content;
@@ -23,58 +28,62 @@ class ChattingMessage extends StatelessWidget {
 
     switch (direction) {
       case ChatDirection.send:
-        results = Container(
-            child: Row(
+        results = Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(child: CachedNetworkImage(imageUrl: avatar)),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(
+                  child: avatar != null
+                      ? CachedNetworkImage(imageUrl: avatar)
+                      : null),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child:
-                        Text(by, style: Theme.of(context).textTheme.subtitle1)),
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Text(by!,
+                        style: Theme.of(context).textTheme.subtitle1)),
                 Container(
-                  margin: EdgeInsets.only(top: 6),
+                  margin: const EdgeInsets.only(top: 6),
                   child: Text(text),
                 ),
               ],
             )
           ],
-        ));
+        );
         break;
       case ChatDirection.receive:
-        results = Container(
-            child: Row(
+        results = Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(child: CachedNetworkImage(imageUrl: avatar)),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(
+                  child: avatar != null
+                      ? CachedNetworkImage(imageUrl: avatar)
+                      : null),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child:
-                        Text(by, style: Theme.of(context).textTheme.subtitle1)),
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Text(by!,
+                        style: Theme.of(context).textTheme.subtitle1)),
                 Container(
-                  margin: EdgeInsets.only(top: 6),
+                  margin: const EdgeInsets.only(top: 6),
                   child: Text(text),
                 ),
               ],
             )
           ],
-        ));
+        );
         break;
     }
 

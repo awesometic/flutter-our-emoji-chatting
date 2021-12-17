@@ -13,7 +13,7 @@ import '../../utility/string_const.dart';
 import '../login_screen.dart';
 
 class LogInView extends StatelessWidget {
-  const LogInView({Key key}) : super(key: key);
+  const LogInView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LogInView extends StatelessWidget {
           ),
         ],
         child: Scaffold(
-          appBar: AppBar(title: Text(StringConstant.appName)),
+          appBar: AppBar(title: const Text(StringConstant.appName)),
           body: SizedBox.expand(
             child: BlocConsumer<LoginSocialCubit, LoginSocialState>(
               bloc: loginSocialCubit,

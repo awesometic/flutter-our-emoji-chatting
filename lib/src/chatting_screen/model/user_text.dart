@@ -7,7 +7,7 @@ class UserText extends FormzInput<String, UserTextValidationError> {
   const UserText.dirty([String value = '']) : super.dirty(value);
 
   @override
-  UserTextValidationError validator(String value) {
-    return value?.isNotEmpty == true ? null : UserTextValidationError.invalid;
+  UserTextValidationError? validator(String value) {
+    return value.isNotEmpty == true ? null : UserTextValidationError.invalid;
   }
 }

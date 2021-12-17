@@ -14,7 +14,7 @@ import '../chatting_screen.dart';
 class ChattingListCubit extends Cubit<ChattingListState> {
   ChattingListCubit() : super(ChattingListInit());
 
-  ChatInfo _chatInfo;
+  ChatInfo? _chatInfo;
 
   final _chatHistory = BehaviorSubject<QuerySnapshot>();
   final _repository = getIt<RepositoryService>();
@@ -27,24 +27,26 @@ class ChattingListCubit extends Cubit<ChattingListState> {
 
   LocalUser get user => _user;
 
-  ChatInfo get chatInfo => _chatInfo;
+  ChatInfo get chatInfo => _chatInfo!;
 
   void initChatRoom() async {
-    var oppositeUserId = _user.oppositeUserId?.first;
+    var oppositeUserId =
+        _user.oppositeUserId!.isEmpty ? '' : _user.oppositeUserId!.first;
 
     emit(ChattingListLoading());
     await _repository.getUser(oppositeUserId).then((value) {
       _chatInfo = ChatInfo(_user, value);
     });
     _chatHistory.addStream(_repository
-        .getChatHistory(_chatInfo, _shownMessageNum)
+        .getChatHistory(_chatInfo!, _shownMessageNum)
         .take(_shownMessageNum));
 
     emit(ChattingListInit());
   }
 
   void loadMoreChats() async {
-    var oppositeUserId = _user.oppositeUserId?.first;
+    var oppositeUserId =
+        _user.oppositeUserId!.isEmpty ? '' : _user.oppositeUserId!.first;
     _shownMessageNum += _numForMoreMsg;
 
     emit(ChattingListLoading());
@@ -57,7 +59,7 @@ class ChattingListCubit extends Cubit<ChattingListState> {
     await _chatHistory.drain();
     _chatHistory.close();
     _chatHistory.addStream(_repository
-        .getChatHistory(_chatInfo, _shownMessageNum)
+        .getChatHistory(_chatInfo!, _shownMessageNum)
         .take(_shownMessageNum));
     emit(ChattingListLoaded());
   }
@@ -67,6 +69,6 @@ class ChattingListCubit extends Cubit<ChattingListState> {
   }
 
   void sendChatToTheRemote(String content, MessageType type) {
-    _repository.sendChatMsg(_chatInfo, content, type);
+    _repository.sendChatMsg(_chatInfo!, content, type);
   }
 }

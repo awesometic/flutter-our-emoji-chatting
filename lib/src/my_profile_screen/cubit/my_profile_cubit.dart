@@ -9,12 +9,13 @@ class MyProfileCubit extends Cubit<MyProfileState> {
 
   final _authService = getIt<AuthService>();
 
-  String getUserAvatar() => _authService.getCurrentUser().avatar;
+  String getUserAvatar() => _authService.getCurrentUser().avatar!;
 
-  String getUserName() => _authService.getCurrentUser().name;
+  String getUserName() => _authService.getCurrentUser().name!;
 
-  String getUserId() => _authService.getCurrentUser().id;
+  String getUserId() => _authService.getCurrentUser().id!;
 
   // TODO: It should display all the opposite users
-  String getUserOppositeId() => _authService.getCurrentUser().oppositeUserId[0];
+  String getUserOppositeId() =>
+      _authService.getCurrentUser().oppositeUserId!.first;
 }

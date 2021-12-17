@@ -7,13 +7,20 @@ import '../settings_screen.dart';
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit() : super(Init());
 
-  void saveOption({OptKey optionKey, dynamic optionValue}) async {
+  bool _isBool(dynamic value) {
+    if (value is bool) {
+      return true;
+    } else {
+      throw Exception('Value is not boolean type');
+    }
+  }
+
+  void saveOption({required OptKey optionKey, dynamic optionValue}) async {
     var sharedPref = await SharedPreferences.getInstance();
 
     try {
       sharedPref.setBool(optionKey.toShortString(),
-          optionValue is bool ? optionValue : () => throw Exception('given value is not boolean type')
-      );
+          optionValue is bool ? optionValue : _isBool(optionValue));
     } on Exception catch (exception) {
       print(exception.toString());
     }
@@ -21,10 +28,11 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(Saved());
   }
 
-  Future<bool> getOption({OptKey optionKey}) async {
+  Future<bool> getOption({required OptKey optionKey}) async {
     var sharedPref = await SharedPreferences.getInstance();
 
-    return sharedPref.getBool(optionKey.toShortString());
+    // TODO: Temporary, if no value is found, return false
+    return sharedPref.getBool(optionKey.toShortString()) ?? false;
   }
 
   // TODO: Is it needed? A better way to late-loading the variables on the settings page?

@@ -14,7 +14,7 @@ class ChattingInputState extends Equatable {
   @override
   List<Object> get props => [userText, status];
 
-  ChattingInputState copyWith({UserText userText, FormzStatus status}) =>
-      ChattingInputState(
-          userText: userText ?? this.userText, status: status ?? this.status);
+  ChattingInputState copyWith(
+          {required UserText userText, required FormzStatus status}) =>
+      ChattingInputState(userText: userText, status: status);
 }

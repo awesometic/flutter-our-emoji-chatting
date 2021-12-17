@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../chatting_screen.dart';
 
 class ChattingView extends StatelessWidget {
-  ChattingView({Key key}) : super(key: key);
+  const ChattingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class ChattingView extends StatelessWidget {
         )
       ],
       child: Column(children: [
-        Flexible(
+        const Flexible(
           child: ChattingMessageList(),
         ),
-        Divider(height: 1.0),
+        const Divider(height: 1.0),
         Container(
           decoration: BoxDecoration(color: Theme.of(context).cardColor),
           child: ChattingInput(),
