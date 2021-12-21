@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_our_emoji_chatting/src/utility/nav_util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../utility/setting_option.dart';
 import '../../utility/string_const.dart';
+import '../../utility/theme_const.dart';
 import '../settings_screen.dart';
 
 class SettingsView extends StatefulWidget {
@@ -99,9 +101,7 @@ class _SettingsViewState extends State<SettingsView> {
                   SettingsTile(
                     title: StringConstant.settingsScreen.logout,
                     leading: Icon(Icons.logout),
-                    onPressed: (context) {
-                      _settingsCubit!.logout();
-                    },
+                    onPressed: (context) => _settingsCubit!.logout(),
                   ),
                 ],
               ),
@@ -119,6 +119,10 @@ class _SettingsViewState extends State<SettingsView> {
                 _updateValues();
                 break;
               case Logout:
+                Fluttertoast.showToast(
+                    msg: StringConstant.messages.loggedOut,
+                    backgroundColor: toastColor);
+
                 navigateToAndRemoveUntil(
                     context, StringConstant.routeLogin, null);
                 break;

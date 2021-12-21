@@ -11,7 +11,8 @@ class StringConstant {
   static const String routeMain = '/main';
   static const String routeSearchPerson = '/search';
 
-  static BottomNavigationBarItemNames bottomNavigationBarItemNames = BottomNavigationBarItemNames();
+  static BottomNavigationBarItemNames bottomNavigationBarItemNames =
+      BottomNavigationBarItemNames();
   static Messages messages = Messages();
   static ChatScreen chatScreen = ChatScreen();
   static ProfileScreen profileScreen = ProfileScreen();
@@ -26,6 +27,7 @@ class BottomNavigationBarItemNames {
 
 class Messages {
   String get widgetNotFound => 'Widget not found';
+  String get loggedOut => 'Logged out';
 }
 
 class ChatScreen {
