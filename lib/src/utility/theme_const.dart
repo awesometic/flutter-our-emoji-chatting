@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-var toastColor = Colors.black.withOpacity(0.7);
+final toastColor = Colors.black.withOpacity(0.7);
