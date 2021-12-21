@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main.dart';
-import '../../authentication/constant/constants.dart' show AuthType;
 import '../../authentication/service/auth_service.dart';
+import '../../utility/auth_const.dart' show AuthType;
 import 'login_social_state.dart';
 
 class LoginSocialCubit extends Cubit<LoginSocialState> {

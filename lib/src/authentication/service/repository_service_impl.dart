@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../authentication/constant/constants.dart' show MessageType;
 import '../../chatting_screen/model/chat_info.dart';
+import '../../utility/auth_const.dart' show MessageType;
 import '../model/local_user.dart';
 import '../resource/fireauth_provider.dart';
 import '../resource/firestore_provider.dart';

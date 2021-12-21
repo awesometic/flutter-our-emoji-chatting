@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../authentication/constant/constants.dart' show MessageType;
+import '../../utility/auth_const.dart' show MessageType;
 import '../../utility/string_const.dart';
 import '../chatting_screen.dart';
 

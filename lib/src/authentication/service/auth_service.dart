@@ -1,5 +1,4 @@
-import '../../authentication/constant/constants.dart' show AuthType;
-
+import '../../utility/auth_const.dart' show AuthType;
 import '../model/local_user.dart';
 
 abstract class AuthService {
