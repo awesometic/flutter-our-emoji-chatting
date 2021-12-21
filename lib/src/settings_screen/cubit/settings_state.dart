@@ -16,3 +16,8 @@ class Saved extends SettingsState {
   @override
   List<Object> get props => [];
 }
+
+class Logout extends SettingsState {
+  @override
+  List<Object> get props => [];
+}

@@ -14,4 +14,6 @@ abstract class AuthService {
   void saveUserLocally(LocalUser user);
 
   Future<bool> userSignIn(AuthType type);
+
+  Future<void> userSignOut();
 }

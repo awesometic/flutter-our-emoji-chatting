@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../main.dart';
+import '../../authentication/service/auth_service.dart';
 import '../../utility/setting_option.dart';
 import '../settings_screen.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit() : super(Init());
+
+  final _authService = getIt<AuthService>();
 
   bool _isBool(dynamic value) {
     if (value is bool) {
@@ -22,7 +28,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       sharedPref.setBool(optionKey.toShortString(),
           optionValue is bool ? optionValue : _isBool(optionValue));
     } on Exception catch (exception) {
-      print(exception.toString());
+      log(exception.toString());
     }
 
     emit(Saved());
@@ -37,4 +43,10 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   // TODO: Is it needed? A better way to late-loading the variables on the settings page?
   void requestInvokeLoadedState() => emit(Loaded());
+
+  void logout() {
+    _authService.userSignOut();
+
+    emit(Logout());
+  }
 }

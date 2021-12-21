@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_our_emoji_chatting/src/utility/nav_util.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../utility/setting_option.dart';
@@ -99,7 +100,7 @@ class _SettingsViewState extends State<SettingsView> {
                     title: StringConstant.settingsScreen.logout,
                     leading: Icon(Icons.logout),
                     onPressed: (context) {
-                      // TODO: Logout using authentication implementations
+                      _settingsCubit!.logout();
                     },
                   ),
                 ],
@@ -116,6 +117,10 @@ class _SettingsViewState extends State<SettingsView> {
               case Saved:
                 // Will load the new values and will invoke Loaded state
                 _updateValues();
+                break;
+              case Logout:
+                navigateToAndRemoveUntil(
+                    context, StringConstant.routeLogin, null);
                 break;
             }
           },

@@ -154,4 +154,7 @@ class AuthServiceImpl implements AuthService {
 
     return false;
   }
+
+  @override
+  Future<void> userSignOut() async => await _repository.signOut();
 }
