@@ -31,7 +31,7 @@ class Messages {
 }
 
 class ChatScreen {
-  String get sendMessageHint => 'Send a message';
+  String get sendMessageHint => 'Type a message...';
 }
 
 class ProfileScreen {
