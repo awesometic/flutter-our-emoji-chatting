@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_bubble/bubble_type.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
+import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 
 import '../../authentication/model/local_user.dart';
 
@@ -22,73 +25,84 @@ class ChattingMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget results;
+    Widget chatWidget;
 
-    var avatar = user.avatar;
-    var by = user.name;
-    var text = content;
+    String? avatar = user.avatar;
+    String? by = user.name;
+    String text = content;
 
     switch (direction) {
       case ChatDirection.send:
-        results = Row(
+        chatWidget = Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              padding: const EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
-                  child: avatar != null
-                      ? CachedNetworkImage(imageUrl: avatar)
-                      : null),
-            ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Text(by!,
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Container(
-                  margin: const EdgeInsets.only(top: 6),
-                  child: Text(text),
+                ChatBubble(
+                  clipper: ChatBubbleClipper1(type: BubbleType.sendBubble),
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.only(top: 20),
+                  backGroundColor: Colors.blue,
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    child: Text(
+                      text,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
-            )
+            ),
           ],
         );
         break;
       case ChatDirection.receive:
-        results = Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              padding: const EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
-                  child: avatar != null
-                      ? CachedNetworkImage(imageUrl: avatar)
-                      : null),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Text(by!,
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Container(
-                  margin: const EdgeInsets.only(top: 6),
-                  child: Text(text),
-                ),
-              ],
-            )
-          ],
+        chatWidget = Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                    child: avatar != null
+                        ? CachedNetworkImage(imageUrl: avatar)
+                        : null),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child:
+                        Text(by!, style: Theme.of(context).textTheme.subtitle2),
+                  ),
+                  ChatBubble(
+                    clipper:
+                        ChatBubbleClipper1(type: BubbleType.receiverBubble),
+                    alignment: Alignment.topLeft,
+                    backGroundColor: Colors.white,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.7,
+                      ),
+                      child: Text(
+                        text,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
         break;
     }
 
-    return results;
+    return chatWidget;
   }
 }
