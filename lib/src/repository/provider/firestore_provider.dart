@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -8,6 +10,7 @@ import '../../utility/auth_const.dart' show MessageType;
 // TODO: In the future, oppositeUserId should be assigned/used in List<String> type
 class FireStoreProvider {
   final _firestore = FirebaseFirestore.instance;
+  final _fireStorage = FirebaseStorage.instance;
 
   Future<bool> authenticateUser() async {
     final result = await _firestore.collection("users").get();
@@ -70,6 +73,9 @@ class FireStoreProvider {
         .orderBy('timestamp', descending: true)
         .snapshots();
   }
+
+  UploadTask uploadFile(File media, String fileName) =>
+      _fireStorage.ref().child(fileName).putFile(media);
 
   Future<void> sendChatMsg(
       ChatInfo chatInfo, String content, MessageType type) {

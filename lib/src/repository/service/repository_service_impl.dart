@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../authentication/model/local_user.dart';
 import '../../chatting_screen/model/chat_info.dart';
@@ -36,6 +39,10 @@ class RepositoryServiceImpl implements RepositoryService {
   @override
   Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) =>
       _fireStoreProvider.getChatHistory(chatInfo);
+
+  @override
+  UploadTask uploadFile(File media, String fileName) =>
+      _fireStoreProvider.uploadFile(media, fileName);
 
   @override
   Future<void> sendChatMsg(
