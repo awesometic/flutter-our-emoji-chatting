@@ -121,7 +121,7 @@ class _SettingsViewState extends State<SettingsView> {
               case Logout:
                 Fluttertoast.showToast(
                     msg: StringConstant.messages.loggedOut,
-                    backgroundColor: toastColor);
+                    backgroundColor: ThemeConstant.toastColor);
 
                 navigateToAndRemoveUntil(
                     context, StringConstant.routeLogin, null);
