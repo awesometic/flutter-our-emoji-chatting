@@ -89,13 +89,24 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
                           ? ChatDirection.send
                           : ChatDirection.receive;
 
-                      return ChattingMessage(
+                      var chatMessage = ChattingMessage(
                           user: chatDirection == ChatDirection.send
                               ? chatInfo.fromUser
                               : chatInfo.toUser,
                           content: message["content"],
                           timestamp: message['timestamp'],
                           direction: chatDirection);
+
+                      // Update the last message in the chatInfo
+                      if (index == 0 &&
+                          int.parse(chatInfo.getLastMsgTimeStamp()) <
+                              int.parse(chatMessage.timestamp)) {
+                        developer.log(
+                            "Update last message in the chat room ${chatInfo.getGroupChatId()}");
+                        chatInfo.setLastMessage(chatMessage);
+                      }
+
+                      return chatMessage;
                     },
                     itemCount: snapshot.data!.docs.length,
                     controller: scrollController);
