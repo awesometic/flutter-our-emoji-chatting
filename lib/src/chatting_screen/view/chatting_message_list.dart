@@ -94,6 +94,7 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
                               ? chatInfo.fromUser
                               : chatInfo.toUser,
                           content: message["content"],
+                          timestamp: message['timestamp'],
                           direction: chatDirection);
                     },
                     itemCount: snapshot.data!.docs.length,

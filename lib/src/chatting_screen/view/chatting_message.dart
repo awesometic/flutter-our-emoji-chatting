@@ -11,11 +11,13 @@ class ChattingMessage extends StatelessWidget {
       {Key? key,
       required this.user,
       required this.content,
+      required this.timestamp,
       required this.direction})
       : super(key: key);
 
   final LocalUser user;
   final String content;
+  final String timestamp;
   final ChatDirection direction;
 
   @override
