@@ -16,8 +16,6 @@ class ChattingInput extends StatelessWidget {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
 
-  File? _imageFile;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,10 +28,11 @@ class ChattingInput extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(Icons.image),
                 onPressed: () async {
-                  var isSetImageSuccessfully = await _setImageFromPicker();
+                  var chatListCubit = context.read<ChattingListCubit>();
+                  File imageFile = await _setImageFromPicker();
 
-                  if (isSetImageSuccessfully) {
-                    developer.log('Image is set successfully');
+                  if (imageFile.path.isNotEmpty) {
+                    chatListCubit.sendFileToRemote(imageFile);
                   } else {
                     developer.log('Image is not set');
                   }
@@ -113,20 +112,12 @@ class ChattingInput extends StatelessWidget {
     _focusNode.requestFocus();
   }
 
-  Future<bool> _setImageFromPicker() async {
+  Future<File> _setImageFromPicker() async {
     ImagePicker imagePicker = ImagePicker();
     final pickedFile = await imagePicker.pickImage(
       source: ImageSource.gallery,
     );
 
-    if (pickedFile != null) {
-      _imageFile = File(pickedFile.path);
-
-      if (_imageFile != null) {
-        return true;
-      }
-    }
-
-    return false;
+    return File(pickedFile?.path ?? '');
   }
 }

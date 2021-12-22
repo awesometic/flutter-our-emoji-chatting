@@ -1,5 +1,7 @@
 import 'dart:developer' as developer;
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -41,6 +43,20 @@ class ChattingListCubit extends Cubit<ChattingListState> {
 
   void thereIsNoHistory() {
     emit(ChattingListNoHistory());
+  }
+
+  void sendFileToRemote(File media) async {
+    String fileName = DateTime.now().microsecondsSinceEpoch.toString();
+    UploadTask uploadTask = _repository.uploadFile(media, fileName);
+
+    try {
+      TaskSnapshot snapshot = await uploadTask;
+      String imageUrl = await snapshot.ref.getDownloadURL();
+
+      sendChatToTheRemote(imageUrl, MessageType.image);
+    } on FirebaseException catch (e) {
+      developer.log(e.message ?? e.toString());
+    }
   }
 
   void sendChatToTheRemote(String content, MessageType type) {
