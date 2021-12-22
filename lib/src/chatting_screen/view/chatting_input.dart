@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utility/auth_const.dart' show MessageType;
 import '../../utility/string_const.dart';
+import '../../utility/theme_const.dart';
 import '../chatting_screen.dart';
 
 class ChattingInput extends StatelessWidget {
@@ -16,33 +17,69 @@ class ChattingInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
-        children: [
+        children: <Widget>[
+          // Button send image
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: const Icon(Icons.image),
+                onPressed: () {},
+                color: ThemeConstant.primaryGreyColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: const Icon(Icons.face),
+                onPressed: () {},
+                color: ThemeConstant.primaryGreyColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+
+          // Edit text
           Flexible(
             child: TextField(
-              controller: _textController,
               onSubmitted: (_) => _aboutToTextSubmitted(
                 context,
                 _textController,
               ),
+              style: const TextStyle(fontSize: 15),
+              controller: _textController,
               decoration: InputDecoration.collapsed(
-                  hintText: StringConstant.chatScreen.sendMessageHint),
+                hintText: StringConstant.chatScreen.sendMessageHint,
+                hintStyle:
+                    const TextStyle(color: ThemeConstant.primaryGreyColor),
+              ),
               focusNode: _focusNode,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 4.0,
+
+          // Button send message
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () => _aboutToTextSubmitted(
+                        context,
+                        _textController,
+                      ),
+                  color: ThemeConstant.primaryColor),
             ),
-            child: IconButton(
-                icon: const Icon(Icons.send),
-                color: Theme.of(context).colorScheme.secondary,
-                onPressed: () =>
-                    _aboutToTextSubmitted(context, _textController)),
+            color: Colors.white,
           ),
         ],
       ),
+      width: double.infinity,
+      height: 50,
+      decoration: const BoxDecoration(color: Colors.white),
     );
   }
 
