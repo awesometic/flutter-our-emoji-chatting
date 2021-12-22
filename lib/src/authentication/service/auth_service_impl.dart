@@ -11,10 +11,10 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:crypto/crypto.dart';
 
 import '../../../main.dart';
+import '../../repository/service/repository_service.dart';
 import '../../utility/auth_const.dart' show AuthType;
 import '../model/local_user.dart';
 import 'auth_service.dart';
-import 'repository_service.dart';
 
 class AuthServiceImpl implements AuthService {
   final _repository = getIt<RepositoryService>();

@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'src/app.dart';
 import 'src/authentication/service/auth_service.dart';
 import 'src/authentication/service/auth_service_impl.dart';
-import 'src/authentication/service/repository_service.dart';
-import 'src/authentication/service/repository_service_impl.dart';
+import 'src/repository/service/repository_service.dart';
+import 'src/repository/service/repository_service_impl.dart';
 
 final GetIt getIt = GetIt.instance;
 

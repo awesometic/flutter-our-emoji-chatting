@@ -6,8 +6,8 @@ import 'package:rxdart/subjects.dart';
 import '../../../main.dart';
 import '../../authentication/model/local_user.dart';
 import '../../authentication/service/auth_service.dart';
-import '../../authentication/service/repository_service.dart';
 import '../../chatting_screen/model/chat_info.dart';
+import '../../repository/service/repository_service.dart';
 import '../../utility/auth_const.dart' show MessageType;
 import '../chatting_screen.dart';
 
