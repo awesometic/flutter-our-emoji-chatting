@@ -62,13 +62,12 @@ class FireStoreProvider {
     // TODO: Should be implemented to support multiple chatting rooms
   }
 
-  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo, int messageLength) {
+  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) {
     return _firestore
         .collection('messages')
         .doc(chatInfo.getGroupChatId())
         .collection(chatInfo.getGroupChatId())
         .orderBy('timestamp', descending: true)
-        .limit(messageLength)
         .snapshots();
   }
 

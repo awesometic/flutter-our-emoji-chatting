@@ -60,15 +60,6 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
     var chatInfo = chattingListCubit!.chatInfo;
     var user = chattingListCubit!.user;
 
-    // If the scroll is at the top, load 20 more chats from the server
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge &&
-          scrollController.position.pixels != 0) {
-        // Set condition as pixels is not 0 because this ListView is reversed
-        chattingListCubit!.loadMoreChats();
-      }
-    });
-
     return StreamBuilder<QuerySnapshot>(
         stream: chattingListCubit!.chatHistory,
         builder: (_, snapshot) {

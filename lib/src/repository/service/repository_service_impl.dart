@@ -34,8 +34,8 @@ class RepositoryServiceImpl implements RepositoryService {
   }
 
   @override
-  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo, int messageLength) =>
-      _fireStoreProvider.getChatHistory(chatInfo, messageLength);
+  Stream<QuerySnapshot> getChatHistory(ChatInfo chatInfo) =>
+      _fireStoreProvider.getChatHistory(chatInfo);
 
   @override
   Future<void> sendChatMsg(
