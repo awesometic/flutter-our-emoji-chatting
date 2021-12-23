@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../utility/auth_const.dart';
 import '../chatting_screen.dart';
 
 class ChattingMessageList extends StatefulWidget {
@@ -85,6 +86,7 @@ class _ChattingMessageListState extends State<ChattingMessageList> {
                               ? chatInfo.fromUser
                               : chatInfo.toUser,
                           content: message["content"],
+                          type: MessageType.values[message['type']],
                           timestamp: message['timestamp'],
                           direction: chatDirection);
 

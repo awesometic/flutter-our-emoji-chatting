@@ -5,6 +5,7 @@ import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 
 import '../../authentication/model/local_user.dart';
+import '../../utility/auth_const.dart';
 
 enum ChatDirection { send, receive }
 
@@ -14,22 +15,20 @@ class ChattingMessage extends StatelessWidget {
       {Key? key,
       required this.user,
       required this.content,
+      required this.type,
       required this.timestamp,
       required this.direction})
       : super(key: key);
 
   final LocalUser user;
   final String content;
+  final MessageType type;
   final String timestamp;
   final ChatDirection direction;
 
   @override
   Widget build(BuildContext context) {
     Widget chatWidget;
-
-    String? avatar = user.avatar;
-    String? by = user.name;
-    String text = content;
 
     switch (direction) {
       case ChatDirection.send:
@@ -47,10 +46,7 @@ class ChattingMessage extends StatelessWidget {
                     constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.7,
                     ),
-                    child: Text(
-                      text,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                    child: buildItemContent(context),
                   ),
                 ),
               ],
@@ -68,8 +64,8 @@ class ChattingMessage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(
-                    child: avatar != null
-                        ? CachedNetworkImage(imageUrl: avatar)
+                    child: user.avatar != null
+                        ? CachedNetworkImage(imageUrl: user.avatar ?? '')
                         : null),
               ),
               Column(
@@ -77,8 +73,8 @@ class ChattingMessage extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child:
-                        Text(by!, style: Theme.of(context).textTheme.subtitle2),
+                    child: Text(user.name!,
+                        style: Theme.of(context).textTheme.subtitle2),
                   ),
                   ChatBubble(
                     clipper:
@@ -89,10 +85,7 @@ class ChattingMessage extends StatelessWidget {
                       constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width * 0.7,
                       ),
-                      child: Text(
-                        text,
-                        style: const TextStyle(color: Colors.black),
-                      ),
+                      child: buildItemContent(context),
                     ),
                   ),
                 ],
@@ -104,5 +97,24 @@ class ChattingMessage extends StatelessWidget {
     }
 
     return chatWidget;
+  }
+
+  Widget buildItemContent(BuildContext context) {
+    switch (type) {
+      case MessageType.text:
+        return Text(content,
+            style: TextStyle(
+                color: direction == ChatDirection.send
+                    ? Colors.white
+                    : Colors.black));
+      case MessageType.image:
+        // TODO: Use cache
+        return Image.network(content);
+      case MessageType.sticker:
+        // TODO: Implement showing a sticker
+        return Container();
+      default:
+        return Container();
+    }
   }
 }
