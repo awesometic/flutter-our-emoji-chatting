@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
+import 'package:flutter_our_emoji_chatting/src/full_photo_screen/full_photo_screen.dart';
 import 'package:flutter_our_emoji_chatting/src/utility/nav_util.dart';
 import 'package:flutter_our_emoji_chatting/src/utility/string_const.dart';
 
@@ -112,7 +113,10 @@ class ChattingMessage extends StatelessWidget {
       case MessageType.image:
         // TODO: Use cache
         return TextButton(
-            onPressed: () {},
+            onPressed: () {
+              navigateTo(context, StringConstant.routeShowFullPhoto,
+                  FullPhotoArgument(imageUrl: content));
+            },
             child: Image.network(
               content,
               width: 200,
