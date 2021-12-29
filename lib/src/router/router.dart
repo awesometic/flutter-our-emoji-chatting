@@ -16,7 +16,9 @@ class Router {
       case StringConstant.routeMain:
         return MaterialPageRoute(builder: (context) => BottomNavigation());
       case StringConstant.routeShowFullPhoto:
-        return MaterialPageRoute(builder: (context) => const FullPhotoView());
+        return MaterialPageRoute(
+            builder: (context) => FullPhotoView(
+                arguments: settings.arguments as FullPhotoArgument));
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
