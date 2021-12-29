@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
+import 'package:flutter_our_emoji_chatting/src/utility/nav_util.dart';
+import 'package:flutter_our_emoji_chatting/src/utility/string_const.dart';
 
 import '../../authentication/model/local_user.dart';
 import '../../utility/auth_const.dart';
@@ -109,7 +111,15 @@ class ChattingMessage extends StatelessWidget {
                     : Colors.black));
       case MessageType.image:
         // TODO: Use cache
-        return Image.network(content);
+        return TextButton(
+            onPressed: () {},
+            child: Image.network(
+              content,
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            ));
+      // return Image.network(content);
       case MessageType.sticker:
         // TODO: Implement showing a sticker
         return Container();
