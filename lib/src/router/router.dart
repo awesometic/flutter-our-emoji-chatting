@@ -15,7 +15,7 @@ class Router {
         return MaterialPageRoute(builder: (context) => MatchingPersonView());
       case StringConstant.routeMain:
         return MaterialPageRoute(builder: (context) => BottomNavigation());
-      case StringConstant.routeSelectPhoto:
+      case StringConstant.routeShowFullPhoto:
         return MaterialPageRoute(builder: (context) => const FullPhotoView());
       default:
         return MaterialPageRoute(

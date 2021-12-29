@@ -10,7 +10,7 @@ class StringConstant {
   static const String routeLogin = '/';
   static const String routeMain = '/main';
   static const String routeSearchPerson = '/search';
-  static const String routeSelectPhoto = '/select_photo';
+  static const String routeShowFullPhoto = '/show_full_photo';
 
   static BottomNavigationBarItemNames bottomNavigationBarItemNames =
       BottomNavigationBarItemNames();
