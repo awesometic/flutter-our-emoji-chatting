@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -114,10 +115,22 @@ class ChattingInput extends StatelessWidget {
 
   Future<File> _setImageFromPicker() async {
     ImagePicker imagePicker = ImagePicker();
-    final pickedFile = await imagePicker.pickImage(
-      source: ImageSource.gallery,
-    );
+    XFile? pickedFile;
 
-    return File(pickedFile?.path ?? '');
+    try {
+      pickedFile = await imagePicker.pickImage(
+        source: ImageSource.gallery,
+      );
+    } on PlatformException catch (e) {
+      developer.log('Failed to pick image: ${e.message}');
+    }
+
+    if (pickedFile == null) {
+      developer.log('No image selected or failed to pick image');
+
+      pickedFile = XFile('');
+    }
+
+    return File(pickedFile.path);
   }
 }
