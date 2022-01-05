@@ -22,10 +22,16 @@ class _ChattingInputState extends State<ChattingInput> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
 
+  ChattingInputCubit? _chatInputCubit;
+  ChattingListCubit? _chatListCubit;
+
   bool _isShowEmoji = false;
 
   @override
   Widget build(BuildContext context) {
+    _chatInputCubit = context.read<ChattingInputCubit>();
+    _chatListCubit = context.read<ChattingListCubit>();
+
     return WillPopScope(
       child: Container(
         child: Column(
@@ -42,16 +48,7 @@ class _ChattingInputState extends State<ChattingInput> {
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     child: IconButton(
                       icon: const Icon(Icons.image),
-                      onPressed: () async {
-                        var chatListCubit = context.read<ChattingListCubit>();
-                        File imageFile = await _setImageFromPicker();
-
-                        if (imageFile.path.isNotEmpty) {
-                          chatListCubit.sendFileToRemote(imageFile);
-                        } else {
-                          developer.log('Image is not set');
-                        }
-                      },
+                      onPressed: () => _onMessageSend(MessageType.image),
                       color: ThemeConstant.primaryGreyColor,
                     ),
                   ),
@@ -77,10 +74,7 @@ class _ChattingInputState extends State<ChattingInput> {
                 // Message text box
                 Flexible(
                   child: TextField(
-                    onSubmitted: (_) => _aboutToTextSubmitted(
-                      context,
-                      _textController,
-                    ),
+                    onSubmitted: (_) => _onMessageSend(MessageType.text),
                     style: const TextStyle(fontSize: 15),
                     controller: _textController,
                     decoration: InputDecoration.collapsed(
@@ -98,10 +92,7 @@ class _ChattingInputState extends State<ChattingInput> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: IconButton(
                         icon: const Icon(Icons.send),
-                        onPressed: () => _aboutToTextSubmitted(
-                              context,
-                              _textController,
-                            ),
+                        onPressed: () => _onMessageSend(MessageType.text),
                         color: ThemeConstant.primaryColor),
                   ),
                   color: Colors.white,
@@ -144,7 +135,7 @@ class _ChattingInputState extends State<ChattingInput> {
             Row(
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => _onMessageSend(MessageType.sticker),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -153,7 +144,7 @@ class _ChattingInputState extends State<ChattingInput> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => _onMessageSend(MessageType.sticker),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -167,22 +158,47 @@ class _ChattingInputState extends State<ChattingInput> {
         ));
   }
 
-  void _aboutToTextSubmitted(
-      BuildContext context, TextEditingController controller) {
-    var chatInputCubit = context.read<ChattingInputCubit>();
-    var chatListCubit = context.read<ChattingListCubit>();
+  void _onMessageSend(MessageType type) async {
+    switch (type) {
+      case MessageType.text:
+        {
+          _chatInputCubit!.validate(_textController.text);
 
-    chatInputCubit.onTyping(_textController.text);
+          if (_chatInputCubit!.state.userText.invalid) {
+            developer.log(
+                'Invalid text: ${_textController.text.isEmpty ? "EMPTY STRING" : _textController.text}',
+                name: 'ChattingInput');
 
-    if (chatInputCubit.state.userText.invalid) {
-      developer.log('Invalid text');
-    } else {
-      chatListCubit.sendChatToTheRemote(
-          chatInputCubit.state.userText.value, MessageType.text);
+            return;
+          }
+
+          _chatListCubit!
+              .sendChatToTheRemote(_chatInputCubit!.state.userText.value, type);
+
+          _textController.clear();
+          _focusNode.requestFocus();
+          break;
+        }
+      case MessageType.image:
+        {
+          File imageFile = await _setImageFromPicker();
+
+          if (imageFile.path.isNotEmpty) {
+            _chatListCubit!.sendFileToRemote(imageFile);
+          } else {
+            developer.log('Image path is not set', name: 'ChattingInput');
+          }
+          break;
+        }
+      case MessageType.sticker:
+        {
+          break;
+        }
+      default:
+        break;
     }
 
-    controller.clear();
-    _focusNode.requestFocus();
+    return;
   }
 
   Future<File> _setImageFromPicker() async {

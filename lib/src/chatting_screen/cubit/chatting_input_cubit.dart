@@ -7,7 +7,7 @@ import 'chatting_input_state.dart';
 class ChattingInputCubit extends Cubit<ChattingInputState> {
   ChattingInputCubit() : super(const ChattingInputState());
 
-  void onTyping(String text) {
+  void validate(String text) {
     final userText = UserText.dirty(text);
 
     developer.log(userText.toString());
