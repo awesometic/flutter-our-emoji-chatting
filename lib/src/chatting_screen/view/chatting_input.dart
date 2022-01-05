@@ -11,88 +11,160 @@ import '../../utility/string_const.dart';
 import '../../utility/theme_const.dart';
 import '../chatting_screen.dart';
 
-class ChattingInput extends StatelessWidget {
-  ChattingInput({Key? key}) : super(key: key);
+class ChattingInput extends StatefulWidget {
+  const ChattingInput({Key? key}) : super(key: key);
 
+  @override
+  State<ChattingInput> createState() => _ChattingInputState();
+}
+
+class _ChattingInputState extends State<ChattingInput> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
 
+  bool _isShowEmoji = false;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          // Button send image
-          Material(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1),
-              child: IconButton(
-                icon: const Icon(Icons.image),
-                onPressed: () async {
-                  var chatListCubit = context.read<ChattingListCubit>();
-                  File imageFile = await _setImageFromPicker();
+    return WillPopScope(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            // Emoji
+            _isShowEmoji ? _buildEmojiBox() : const SizedBox.shrink(),
 
-                  if (imageFile.path.isNotEmpty) {
-                    chatListCubit.sendFileToRemote(imageFile);
-                  } else {
-                    developer.log('Image is not set');
-                  }
-                },
-                color: ThemeConstant.primaryGreyColor,
-              ),
-            ),
-            color: Colors.white,
-          ),
-          Material(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1),
-              child: IconButton(
-                icon: const Icon(Icons.face),
-                onPressed: () {},
-                color: ThemeConstant.primaryGreyColor,
-              ),
-            ),
-            color: Colors.white,
-          ),
+            // Buttons and text box
+            Row(
+              children: [
+                // Image button
+                Material(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 1),
+                    child: IconButton(
+                      icon: const Icon(Icons.image),
+                      onPressed: () async {
+                        var chatListCubit = context.read<ChattingListCubit>();
+                        File imageFile = await _setImageFromPicker();
 
-          // Edit text
-          Flexible(
-            child: TextField(
-              onSubmitted: (_) => _aboutToTextSubmitted(
-                context,
-                _textController,
-              ),
-              style: const TextStyle(fontSize: 15),
-              controller: _textController,
-              decoration: InputDecoration.collapsed(
-                hintText: StringConstant.chatScreen.sendMessageHint,
-                hintStyle:
-                    const TextStyle(color: ThemeConstant.primaryGreyColor),
-              ),
-              focusNode: _focusNode,
-            ),
-          ),
+                        if (imageFile.path.isNotEmpty) {
+                          chatListCubit.sendFileToRemote(imageFile);
+                        } else {
+                          developer.log('Image is not set');
+                        }
+                      },
+                      color: ThemeConstant.primaryGreyColor,
+                    ),
+                  ),
+                  color: Colors.white,
+                ),
 
-          // Button send message
-          Material(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => _aboutToTextSubmitted(
-                        context,
-                        _textController,
-                      ),
-                  color: ThemeConstant.primaryColor),
-            ),
-            color: Colors.white,
-          ),
-        ],
+                // Emoji button
+                Material(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 1),
+                    child: IconButton(
+                      icon: const Icon(Icons.face),
+                      onPressed: () {
+                        _focusNode.unfocus();
+                        setState(() => _isShowEmoji = !_isShowEmoji);
+                      },
+                      color: ThemeConstant.primaryGreyColor,
+                    ),
+                  ),
+                  color: Colors.white,
+                ),
+
+                // Message text box
+                Flexible(
+                  child: TextField(
+                    onSubmitted: (_) => _aboutToTextSubmitted(
+                      context,
+                      _textController,
+                    ),
+                    style: const TextStyle(fontSize: 15),
+                    controller: _textController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: StringConstant.chatScreen.sendMessageHint,
+                      hintStyle: const TextStyle(
+                          color: ThemeConstant.primaryGreyColor),
+                    ),
+                    focusNode: _focusNode,
+                  ),
+                ),
+
+                // Send button
+                Material(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    child: IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () => _aboutToTextSubmitted(
+                              context,
+                              _textController,
+                            ),
+                        color: ThemeConstant.primaryColor),
+                  ),
+                  color: Colors.white,
+                ),
+              ],
+            )
+          ],
+        ),
+        width: double.infinity,
+        decoration: const BoxDecoration(color: Colors.white),
       ),
-      width: double.infinity,
-      height: 50,
-      decoration: const BoxDecoration(color: Colors.white),
+      onWillPop: _onBackPress,
     );
+  }
+
+  Future<bool> _onBackPress() {
+    if (_isShowEmoji) {
+      setState(() {
+        _isShowEmoji = false;
+      });
+    } else {
+      Navigator.pop(context);
+    }
+
+    return Future.value(false);
+  }
+
+  Widget _buildEmojiBox() {
+    return Container(
+        padding: const EdgeInsets.all(12),
+        decoration: const BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5,
+            spreadRadius: 1,
+          ),
+        ]),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                        child: Text(":)", style: TextStyle(fontSize: 35))),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                        child: Text(":p", style: TextStyle(fontSize: 35))),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ));
   }
 
   void _aboutToTextSubmitted(
