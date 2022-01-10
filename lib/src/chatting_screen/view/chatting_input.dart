@@ -48,7 +48,7 @@ class _ChattingInputState extends State<ChattingInput> {
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     child: IconButton(
                       icon: const Icon(Icons.image),
-                      onPressed: () => _onMessageSend(MessageType.image),
+                      onPressed: () => _onMessageSend(type: MessageType.image),
                       color: ThemeConstant.primaryGreyColor,
                     ),
                   ),
@@ -74,7 +74,7 @@ class _ChattingInputState extends State<ChattingInput> {
                 // Message text box
                 Flexible(
                   child: TextField(
-                    onSubmitted: (_) => _onMessageSend(MessageType.text),
+                    onSubmitted: (_) => _onMessageSend(type: MessageType.text),
                     style: const TextStyle(fontSize: 15),
                     controller: _textController,
                     decoration: InputDecoration.collapsed(
@@ -92,7 +92,7 @@ class _ChattingInputState extends State<ChattingInput> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: IconButton(
                         icon: const Icon(Icons.send),
-                        onPressed: () => _onMessageSend(MessageType.text),
+                        onPressed: () => _onMessageSend(type: MessageType.text),
                         color: ThemeConstant.primaryColor),
                   ),
                   color: Colors.white,
@@ -135,7 +135,7 @@ class _ChattingInputState extends State<ChattingInput> {
             Row(
               children: [
                 TextButton(
-                  onPressed: () => _onMessageSend(MessageType.sticker),
+                  onPressed: () => _onMessageSend(type: MessageType.sticker),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -144,7 +144,7 @@ class _ChattingInputState extends State<ChattingInput> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => _onMessageSend(MessageType.sticker),
+                  onPressed: () => _onMessageSend(type: MessageType.sticker),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -158,7 +158,7 @@ class _ChattingInputState extends State<ChattingInput> {
         ));
   }
 
-  void _onMessageSend(MessageType type) async {
+  void _onMessageSend({required MessageType type}) async {
     switch (type) {
       case MessageType.text:
         {
