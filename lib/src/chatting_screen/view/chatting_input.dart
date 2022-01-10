@@ -135,7 +135,7 @@ class _ChattingInputState extends State<ChattingInput> {
             Row(
               children: [
                 TextButton(
-                  onPressed: () => _onMessageSend(type: MessageType.sticker),
+                  onPressed: () => _onMessageSend(type: MessageType.emoticon),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -144,7 +144,7 @@ class _ChattingInputState extends State<ChattingInput> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => _onMessageSend(type: MessageType.sticker),
+                  onPressed: () => _onMessageSend(type: MessageType.emoticon),
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -190,7 +190,7 @@ class _ChattingInputState extends State<ChattingInput> {
           }
           break;
         }
-      case MessageType.sticker:
+      case MessageType.emoticon:
         {
           break;
         }

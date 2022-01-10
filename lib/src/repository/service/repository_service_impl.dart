@@ -52,8 +52,8 @@ class RepositoryServiceImpl implements RepositoryService {
       case MessageType.image:
         lastContent = "Image was sent";
         break;
-      case MessageType.sticker:
-        lastContent = "Sticker was sent";
+      case MessageType.emoticon:
+        lastContent = "Emoticon was sent";
         break;
       default:
         break;

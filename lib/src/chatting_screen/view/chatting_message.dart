@@ -124,8 +124,8 @@ class ChattingMessage extends StatelessWidget {
               fit: BoxFit.cover,
             ));
       // return Image.network(content);
-      case MessageType.sticker:
-        // TODO: Implement showing a sticker
+      case MessageType.emoticon:
+        // TODO: Implement showing a emoticon
         return Container();
       default:
         return Container();

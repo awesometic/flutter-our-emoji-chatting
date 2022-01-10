@@ -7,5 +7,5 @@ enum AuthType {
 enum MessageType {
   text,
   image,
-  sticker,
+  emoticon,
 }
