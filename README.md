@@ -1,16 +1,30 @@
-# flutter_our_emoji_chatting
+# Our Emoji Chatting
 
-A new Flutter project.
+With this application the users can make emojis from their pictures and can share them with their friends.
 
-## Getting Started
+It uses Firebase as its backend server.
 
-This project is a starting point for a Flutter application.
+## What things can I study during developing this application
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter with Dart
+- Null-safety as it uses Flutter 2+
+- State-based UI like React
+- BLoC pattern, one of the reactive programming patterns
+- Asynchronous progamming using Future, async/await from Dart
+- Dependency injection using GetIt package
+- How to use Firebase and Firestore
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Todos
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [x] OAuth login - Apple, Google, Github
+- [x] Implement a chatting page
+- [x] Send a message
+- [x] Send a picture
+- [ ] Send a emoji
+- [ ] Make an emoji from a picture
+- [x] Prototype of a settings page
+- [ ] App lock - including face unlock if iOS
+- [ ] Change chatting nickname
+- [ ] Group chatting room
+- [ ] Searching a person using an email account or nickname
+- [ ] Dark theme
